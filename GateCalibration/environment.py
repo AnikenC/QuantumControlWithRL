@@ -34,7 +34,7 @@ class GateCalibrationEnvironment(gym.Env):
             "mean reward": np.mean(self.reward),
             "episode length": self.episode_length,
             "max reward": self.max_reward,
-            "step for max reward": self.step_for_max_reward
+            "step for max": self.step_for_max_reward
         }
         return info
     
@@ -42,15 +42,16 @@ class GateCalibrationEnvironment(gym.Env):
         # We need the following line to seed self.np_random
         super().reset(seed=seed)
 
-        observation = self._get_obs
-        info = self._get_info
+        observation = self._get_obs()
+        info = self._get_info()
         return observation, info
     
     def step(self, action):
         ### Single Length Episode ###
-        self.length += 1
+        self.episode_length += 1
 
-        self.reward = self.qenvironment.perform_action_gate_cal(action) # Can support batched actions
+        index = 0 # np.random.randint(16)
+        self.reward = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
         if np.max(self.reward) > self.max_reward:
             self.max_reward = np.max(self.reward)
         observation = self._get_obs()
@@ -58,5 +59,5 @@ class GateCalibrationEnvironment(gym.Env):
         terminated = True
 
         if terminated:
-            self.length = 0
+            self.episode_length = 0
         return observation, self.reward, terminated, False, info
