@@ -9,7 +9,7 @@ from static import AbstractionLevel
 class GateCalibrationEnvironment(gym.Env):
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self, render_mode=None):
+    def __init__(self):
         self.qenvironment = QuantumEnvironment(target=CNOT(), abstraction_level=AbstractionLevel.CIRCUIT)
         self.init_obs = np.ones(1, dtype=np.float64)
         self.n_actions = 7
@@ -17,6 +17,10 @@ class GateCalibrationEnvironment(gym.Env):
         self.max_reward = 0.
         self.step_for_max_reward = 0
         self.episode_length = 0
+        self.simple_sample = True
+        self.simple_size = 2
+        assert type(self.simple_size) == int, "Type for sampling must be int"
+        assert self.simple_size > 0 and self.simple_size < 16, "Sample Size must be greater than 0 and less than 16"
 
         self.action_space = Box(
             low=-1.0, high=1.0, shape=(self.n_actions,), dtype=np.float64
@@ -50,7 +54,9 @@ class GateCalibrationEnvironment(gym.Env):
         ### Single Length Episode ###
         self.episode_length += 1
 
-        index = 0 # np.random.randint(16)
+        index = np.random.randint(16)
+        if self.simple_sample:
+            index = np.random.randint(self.simple_size)
         self.reward = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
         if np.max(self.reward) > self.max_reward:
             self.max_reward = np.max(self.reward)

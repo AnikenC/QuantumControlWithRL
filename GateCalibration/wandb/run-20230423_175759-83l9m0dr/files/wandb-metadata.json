@@ -1,0 +1,44 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.9.11",
+    "heartbeatAt": "2023-04-23T09:58:00.683843",
+    "startedAt": "2023-04-23T09:57:59.665152",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--track"
+    ],
+    "state": "running",
+    "program": "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/GateCalibration/ppo_train.py",
+    "codePath": "GateCalibration/ppo_train.py",
+    "git": {
+        "remote": "https://github.com/AnikenC/QuantumControlWithRL.git",
+        "commit": "5cbe44e06c6fe8db36b547b83d45b4d1ce456d89"
+    },
+    "email": "quantac47@gmail.com",
+    "root": "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL",
+    "host": "Aniken",
+    "username": "chatt07",
+    "executable": "/Users/chatt07/Desktop/proper_env/bin/python3",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 1400,
+        "min": 1400,
+        "max": 1400
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1400,
+            "min": 1400,
+            "max": 1400
+        }
+    ],
+    "disk": {
+        "total": 233.46913528442383,
+        "used": 8.451908111572266
+    },
+    "memory": {
+        "total": 8.0
+    }
+}
