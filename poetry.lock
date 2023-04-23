@@ -437,6 +437,28 @@ files = [
 ]
 
 [[package]]
+name = "glfw"
+version = "2.5.9"
+description = "A ctypes-based wrapper for GLFW3."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "glfw-2.5.9-py2.py27.py3.py30.py31.py32.py33.py34.py35.py36.py37.py38-none-macosx_10_6_intel.whl", hash = "sha256:fbad05c574ec6950fa11c992901ee8f29729fcc9447b1830924d04cf51e46b17"},
+    {file = "glfw-2.5.9-py2.py27.py3.py30.py31.py32.py33.py34.py35.py36.py37.py38-none-macosx_11_0_arm64.whl", hash = "sha256:ac794f5a9be767d9865fc23d842aec2db6c36366d5aa58879ca52bdd231f9a07"},
+    {file = "glfw-2.5.9-py2.py27.py3.py30.py31.py32.py33.py34.py35.py36.py37.py38-none-manylinux2010_i686.whl", hash = "sha256:f866f50bbfbb779b2a8ca3efff306d5206f5611cbc58fa77f23adc5efb401af8"},
+    {file = "glfw-2.5.9-py2.py27.py3.py30.py31.py32.py33.py34.py35.py36.py37.py38-none-manylinux2010_x86_64.whl", hash = "sha256:e5746ae1491ef4a17df645a18f5f9e0c671d08d615ab0e9b46181c613133281f"},
+    {file = "glfw-2.5.9-py2.py27.py3.py30.py31.py32.py33.py34.py35.py36.py37.py38-none-manylinux2014_aarch64.whl", hash = "sha256:d345b2f8cfddfbd1a80e4c84abee3702be17301b3751820abae53283de749b0d"},
+    {file = "glfw-2.5.9-py2.py27.py3.py30.py31.py32.py33.py34.py35.py36.py37.py38-none-manylinux2014_x86_64.whl", hash = "sha256:adc6b2c4de5345afc4970515fd8d4332557522727e1d0fd7b68c99afaaa24b80"},
+    {file = "glfw-2.5.9-py2.py27.py3.py30.py31.py32.py33.py34.py35.py36.py37.py38-none-win32.whl", hash = "sha256:c99ebf600b9f551ce94f81a0acd1d224ef62f266375cfb47797ed8cb62916ff3"},
+    {file = "glfw-2.5.9-py2.py27.py3.py30.py31.py32.py33.py34.py35.py36.py37.py38-none-win_amd64.whl", hash = "sha256:bed92052e1d9f6bc0f2a918e78f9b343b9a350e93d111e8b2ab2cd70382cd237"},
+    {file = "glfw-2.5.9.tar.gz", hash = "sha256:1510a77507d279f8a35e3dbec2892774358539500687159f4bf2fd15cefff81d"},
+]
+
+[package.extras]
+preview = ["glfw-preview"]
+
+[[package]]
 name = "google-auth"
 version = "2.17.3"
 description = "Google Authentication Library"
@@ -942,6 +964,47 @@ gmpy = ["gmpy2 (>=2.1.0a4)"]
 tests = ["pytest (>=4.6)"]
 
 [[package]]
+name = "mujoco"
+version = "2.3.4"
+description = "MuJoCo Physics Simulator"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "mujoco-2.3.4-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:ea4531f4c1702dc93cd4a3a32932cb3f164ea0cadd85b9afbe9afc7ca642d0d7"},
+    {file = "mujoco-2.3.4-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:cfad59d9bc5236d3276da7dce57005140e06ab3ec221386099d104fc91e44d38"},
+    {file = "mujoco-2.3.4-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:0b283afbdd7359b1d398433384b03b02264751f6a53fb064cdf4a82a9c695601"},
+    {file = "mujoco-2.3.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c42d7ff9deebbb3897a54a67aa16986987089c9b3301f79d6932f1f7c76f154b"},
+    {file = "mujoco-2.3.4-cp310-cp310-win_amd64.whl", hash = "sha256:c66b9236e2ffe052bd2c507b86e3f06cf501c9bd6f43cfa5132b71a87514d55c"},
+    {file = "mujoco-2.3.4-cp311-cp311-macosx_10_12_x86_64.whl", hash = "sha256:13671a5e77fad9ee90c6a12e889e42c083ce0860aa31050d84c53dba43a4ff33"},
+    {file = "mujoco-2.3.4-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:985ce74d4b6e3edcca210377a9dd06621fd74b0526baee3609dbb5cddc254ba6"},
+    {file = "mujoco-2.3.4-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ca88a250bc29b37e29b57739d943a4ee953b6d32241c63988cd9e7b9be6694b8"},
+    {file = "mujoco-2.3.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:47b6bd56ce4274b328fdff5ad98e14417b52552d07b18607e44853fdd890e44c"},
+    {file = "mujoco-2.3.4-cp311-cp311-win_amd64.whl", hash = "sha256:c1cdac2c87b4f76701e7c742bd0472d3eac8a308bfb0edaf1623a78d57ddc416"},
+    {file = "mujoco-2.3.4-cp37-cp37m-macosx_10_12_x86_64.whl", hash = "sha256:e16c5e16633e80675c34006e486d9ebe954564850a98e7b0003b5567bbdbcece"},
+    {file = "mujoco-2.3.4-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:8a3816bb7f6616d8e3550cda972d271d8b0279c123c0044cfb36b2d73748754f"},
+    {file = "mujoco-2.3.4-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e1650152c9f2ef85ccdfde25d13f74f650958d8d78e97e280a2a72b1b7e12bec"},
+    {file = "mujoco-2.3.4-cp37-cp37m-win_amd64.whl", hash = "sha256:e343c75ab9e7b404cc0eb6a1f59ec2ef119d46cced162295873df70d2a23a689"},
+    {file = "mujoco-2.3.4-cp38-cp38-macosx_10_12_x86_64.whl", hash = "sha256:06c171783751bcff586abfa39f8dc3e6e2fa66e62be3379f7d75ef5269469d17"},
+    {file = "mujoco-2.3.4-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:f263fd88e4e899bc561051af7fbc3f78b33bdaf7c5af596214ca6579c03291ce"},
+    {file = "mujoco-2.3.4-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d476afdefee0ca1e5099bc6c3aac9599f9b06f91acfa32dd2e9d564e70ea4c95"},
+    {file = "mujoco-2.3.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:57019e78c977029daeccd8ad279cbe158eca7f9d642adcb0503facbce4bd484b"},
+    {file = "mujoco-2.3.4-cp38-cp38-win_amd64.whl", hash = "sha256:b47f82dfb338dc132448a64cc425c21d3b1825a44e388d9b9dc57a38f16e1ea8"},
+    {file = "mujoco-2.3.4-cp39-cp39-macosx_10_12_x86_64.whl", hash = "sha256:a5fd885feddfcb9f1f2affcb1470f441f5210bacb15bfa64ea34e2d876128f15"},
+    {file = "mujoco-2.3.4-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:c3852d8af89886888e4305c2e8f7ffb22ea4c693d415c7a79c47248d222b6bd2"},
+    {file = "mujoco-2.3.4-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:11804281bebd20970798f1a10f9bc9a21903765dbaa777b5f268ba42f45a1f75"},
+    {file = "mujoco-2.3.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5d2d89b9bd25ee73dd13bdf6f07344802c21a48859bd561891278c1c558007b6"},
+    {file = "mujoco-2.3.4-cp39-cp39-win_amd64.whl", hash = "sha256:fd7f7fa9601409aee24422bb97c9d74a247dfe93801fa3d1d4b9710898ef12b0"},
+    {file = "mujoco-2.3.4.tar.gz", hash = "sha256:c226e9dc698156d4cc9927eee77140d94e53a6cf7d67a10bd8db17a9470758d1"},
+]
+
+[package.dependencies]
+absl-py = "*"
+glfw = "*"
+numpy = "*"
+pyopengl = "*"
+
+[[package]]
 name = "ntlm-auth"
 version = "1.5.0"
 description = "Creates NTLM authentication structures"
@@ -1202,6 +1265,19 @@ crypto = ["cryptography (>=3.4.0)"]
 dev = ["coverage[toml] (==5.0.4)", "cryptography (>=3.4.0)", "pre-commit", "pytest (>=6.0.0,<7.0.0)", "sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
 docs = ["sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
 tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
+
+[[package]]
+name = "pyopengl"
+version = "3.1.6"
+description = "Standard OpenGL bindings for Python"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "PyOpenGL-3.1.6-py2-none-any.whl", hash = "sha256:57c597d989178e1413002df6b923619f6d29807501dece1c60cc6f12c0c8e8a7"},
+    {file = "PyOpenGL-3.1.6-py3-none-any.whl", hash = "sha256:a7139bc3e15d656feae1f7e3ef68c799941ed43fadc78177a23db7e946c20738"},
+    {file = "PyOpenGL-3.1.6.tar.gz", hash = "sha256:8ea6c8773927eda7405bffc6f5bb93be81569a7b05c8cac50cd94e969dce5e27"},
+]
 
 [[package]]
 name = "python-dateutil"
@@ -2288,4 +2364,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "3.9.11"
-content-hash = "f0086084897078b4f61ae8711893fe64af80d74152995dd79877f3ad669a903c"
+content-hash = "a8f7a4a516d29b76b4d2459f4bd3f9a432bac12aeeb9ef788dd8cca7a63b002e"
