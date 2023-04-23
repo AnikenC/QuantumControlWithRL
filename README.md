@@ -9,11 +9,12 @@ Most of the RL Algos are implemented through CleanRL, which provides many single
 3. In the root folder, run `poetry init` and then `poetry install` to install all other dependencies like `qiskit` and `qiskit_ibm_runtime`
 4. To start training, run `python3 QuantumControl/ppo.py` on the command line from the root folder.
 
+To use one of the registered quantum environments during training, just modify the environment id to the updated one. For example you can run `python3 QuantumControl/ppo.py --env-id="quantum_envs/QuantumGateCalibration-v0"` from the command line in the root folder.
+
 The general structure for this repository is that RL algos can be taken from the `cleanrl_modules` folder, and then placed inside the `QuantumControl` folder. From there, they can be run as normal with a registered quantum environment directly, without any code changes if desired.
 
 To access and make your own quantum environments, you need to make a Gymnasium compatible environment, and follow [Gymnasium Registration protocol for making a custom environment](https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/#make-your-own-custom-environment). The broad structure for creating a new environment is to put all relevant files for the environment in a folder in QuantumControl->quantum_envs->envs. Then update the  `__init__.py` file in QuantumControl->quantum_envs->envs by importing the new Gymnasium Environment Class created. Then register this new environment in the `__init__.py` file in QuantumControl->quantum_envs with the necessary registration details.
 
-To use one of the registered quantum environments during training, just modify the environment id to the updated one. For example you can run `python3 QuantumControl/ppo.py --env-id="quantum_envs/QuantumGateCalibration-v0"` from the command line in the root folder.
 ---
 ## Features to Develop
 1. Add hyperparameter optimization with the tuner file from CleanRL
