@@ -17,7 +17,10 @@ class CNOTGateCalibrationEnvironment(gym.Env):
         self.max_reward = 0.
         self.step_for_max_reward = 0
         self.episode_length = 0
+        self.simple_sample = 0
         self.complete_tomography_state_size = len(self.qenvironment.target.input_states)
+        self.process_fidelity = 0.
+        self.average_fidelity = 0.
 
         self.action_space = Box(
             low=-1.0, high=1.0, shape=(self.n_actions,), dtype=np.float64
@@ -35,7 +38,9 @@ class CNOTGateCalibrationEnvironment(gym.Env):
             "mean reward": np.mean(self.reward),
             "episode length": self.episode_length,
             "max reward": self.max_reward,
-            "step for max": self.step_for_max_reward
+            "step for max": self.step_for_max_reward,
+            "average fidelity": self.average_fidelity,
+            "process fidelity": self.process_fidelity,
         }
         return info
     
@@ -47,16 +52,16 @@ class CNOTGateCalibrationEnvironment(gym.Env):
         info = self._get_info()
         return observation, info
     
-    def step(self, action, simple_sample=0):
+    def step(self, action):
         ### Single Length Episode ###
         self.episode_length += 1
 
-        assert simple_sample.type == int, "Only an integer number of input samples can be used"
-        assert simple_sample > 0 and simple_sample < self.complete_tomography_state_size, f"Size must be greater than 0 and less than or equal to {self.complete_tomography_state_size}"
         index = np.random.randint(self.complete_tomography_state_size)
         if not self.simple_sample == 0:
             index = np.random.randint(self.simple_size)
-        self.reward = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
+        self.reward, average_fidelity, process_fidelity = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
+        self.process_fidelity = process_fidelity
+        self.average_fidelity = average_fidelity
         if np.max(self.reward) > self.max_reward:
             self.max_reward = np.max(self.reward)
         observation = self._get_obs()

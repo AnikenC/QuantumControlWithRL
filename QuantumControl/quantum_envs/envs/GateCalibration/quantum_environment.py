@@ -124,17 +124,6 @@ class QuantumEnvironment:
         else:
             raise KeyError("target type not identified, must be either gate or state")
 
-        # Data storage for TF-Agents or plotting
-        self.action_history = []
-        self._state = np.zeros([self.d, self.d], dtype="complex128")
-        self.density_matrix_history = []
-        self.reward_history = []
-        self.state_fidelity_history = []
-        self.process_fidelity_history = []
-        self.avg_fidelity_history = []
-        self.time_step = 0
-        self.episode_ended = False
-
     def calculate_chi_target_state(self, target_state: Dict):
         """
         Calculate for all P
@@ -157,85 +146,6 @@ class QuantumEnvironment:
         )  # Real part is taken to convert it in a good format,
         # but im is 0 systematically as dm is hermitian and Pauli is traceless
         return target_state
-
-    def perform_action(self, actions):
-        """
-        Execute quantum circuit with parametrized amplitude, retrieve measurement result and assign rewards accordingly
-        :param actions: action vector to execute on quantum system
-        :return: Reward table (reward for each run in the batch), observations (measurement outcomes),
-        obtained density matrix
-        """
-        angles, batch_size = np.array(actions), len(np.array(actions))
-        # Direct fidelity estimation protocol  (https://doi.org/10.1103/PhysRevLett.106.230501)
-
-        assert self.target_type == "state"
-        distribution = torch.distributions.Categorical(probs=torch.tensor(self.target["Chi"] ** 2))
-        k_samples = distribution.sample(self.sampling_pauli_space,)
-        pauli_index, _, pauli_shots = torch.unique(k_samples).cpu()
-
-        reward_factor = np.round(
-            [
-                self.c_factor * self.target["Chi"][p] / (self.d * distribution.prob(p))
-                for p in pauli_index
-            ],
-            5,
-        )
-
-        # observables = [SparsePauliOp(self.Pauli_ops[p]["name"]) for p in pauli_index]
-        observables = SparsePauliOp.from_list(
-            [
-                (self.Pauli_ops[p]["name"], reward_factor[i])
-                for i, p in enumerate(pauli_index)
-            ]
-        )
-        # Apply parametrized quantum circuit (action)
-        self.parametrized_circuit_func(self.qc)
-
-        # Keep track of state for benchmarking purposes only
-        self.density_matrix = np.zeros([self.d, self.d], dtype="complex128")
-        for angle_set in angles:
-            qc_2 = self.qc.bind_parameters(angle_set)
-            q_state = Statevector.from_instruction(qc_2)
-            self.density_matrix += np.array(q_state.to_operator())
-        self.density_matrix /= batch_size
-        self.density_matrix = DensityMatrix(self.density_matrix)
-        self.density_matrix_history.append(self.density_matrix)
-        self.action_history.append(angles)
-        self.state_fidelity_history.append(
-            state_fidelity(self.target["dm"], self.density_matrix)
-        )
-
-        # total_shots = self.n_shots * pauli_shots
-        # job_list, result_list = [], []
-        # exp_values = np.zeros((len(pauli_index), batch_size))
-
-        with Session(service=self.service, backend=self.backend):
-            # for p in range(len(pauli_index)):
-            #     estimator = Estimator(options=self.options)
-            #     job = estimator.run(circuits=[self.qc] * batch_size, observables=[observables[p]] * batch_size,
-            #                         parameter_values=angles,
-            #                         shots=int(total_shots[p]))
-            #     job_list.append(job)
-            #     result_list.append(job.result())
-            #     exp_values[p] = result_list[p].values
-            estimator = Estimator(options=self.options)
-            job = estimator.run(
-                circuits=[self.qc] * batch_size,
-                observables=[observables] * batch_size,
-                parameter_values=angles,
-                shots=self.sampling_pauli_space,
-            )
-        result = job.result()
-        reward_table = result.values
-        self.qc.clear()
-
-        # reward_table = np.mean(reward_factor[:, np.newaxis] * exp_values, axis=0)
-        self.reward_history.append(reward_table)
-        assert len(reward_table) == batch_size
-        return reward_table  # Shape [batchsize]
-    
-
-
 
     def perform_action_gate_cal(self, actions, index):
         """
@@ -294,6 +204,17 @@ class QuantumEnvironment:
         parametrized_circ = QuantumCircuit(self.n_qubits)
         self.parametrized_circuit_func(parametrized_circ)
 
+        # Keep track of process for benchmarking purposes only
+        prc_fidelity = 0.0
+        avg_fidelity = 0.0
+        for angle_set in angles:
+            qc_2 = parametrized_circ.bind_parameters(angle_set)
+            q_process = Operator(qc_2)
+            prc_fidelity += process_fidelity(q_process, Operator(self.target.gate))
+            avg_fidelity += average_gate_fidelity(q_process, Operator(self.target.gate))
+        proc_fidelity = prc_fidelity / batch_size
+        aver_fidelity = avg_fidelity / batch_size
+
         # Build full quantum circuit: concatenate input state prep and parametrized unitary
         self.qc.append(parametrized_circ.to_instruction(), input_state.register)
         # total_shots = self.n_shots * pauli_shots
@@ -309,4 +230,4 @@ class QuantumEnvironment:
         self.qc.clear()  # Reset the QuantumCircuit instance for next iteration
 
         reward_table = job.result().values
-        return reward_table
+        return reward_table, aver_fidelity, proc_fidelity
