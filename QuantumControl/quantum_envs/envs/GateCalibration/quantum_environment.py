@@ -158,7 +158,7 @@ class QuantumEnvironment:
             actions = np.expand_dims(actions, 0)
         angles, batch_size = np.array(actions), len(np.array(actions))
 
-        assert self.target_type == "gate"
+        assert self.target_type == "gate", "Environment only supports Gate Target Type"
 
         input_state = self.target.input_states[index]
         # Deduce target state to aim for by applying target operation on it

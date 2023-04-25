@@ -17,7 +17,7 @@ class CNOTGateCalibrationEnvironment(gym.Env):
         self.max_reward = 0.
         self.step_for_max_reward = 0
         self.episode_length = 0
-        self.simple_sample = 0
+        self.simple_sample = 4
         self.complete_tomography_state_size = len(self.qenvironment.target.input_states)
         self.process_fidelity = 0.
         self.average_fidelity = 0.
