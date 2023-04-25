@@ -13,6 +13,8 @@ import torch.optim as optim
 from torch.distributions.normal import Normal
 from torch.utils.tensorboard import SummaryWriter
 
+from quantum_classes import CustomSyncVectorEnv
+
 import quantum_envs
 
 
@@ -42,6 +44,8 @@ def parse_args():
         help="the purpose of the experiment being run")
     parser.add_argument("--capture-video", type=lambda x: bool(strtobool(x)), default=False, nargs="?", const=True,
         help="whether to capture videos of the agent performances (check out `videos` folder)")
+    parser.add_argument("--simple-sample-size", type=int, default=0, nargs="?", const=True,
+        help="For Gate Calibration tasks this variable is used for the input state sample size")
 
     # Algorithm specific arguments
     parser.add_argument("--env-id", type=str, default="quantum_envs/QuantumGateCalibration-v0",
@@ -171,7 +175,7 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
 
     # env setup
-    envs = gym.vector.SyncVectorEnv(
+    envs = CustomSyncVectorEnv(
         [make_env(args.env_id, i, args.capture_video, run_name, args.gamma) for i in range(args.num_envs)]
     )
     assert isinstance(envs.single_action_space, gym.spaces.Box), "only continuous action space is supported"
@@ -216,7 +220,7 @@ if __name__ == "__main__":
             logprobs[step] = logprob
 
             # TRY NOT TO MODIFY: execute the game and log data.
-            next_obs, reward, terminated, truncated, infos = envs.step(action.cpu().numpy())
+            next_obs, reward, terminated, truncated, infos = envs.step(action.cpu().numpy(), args.simple_sample_size)
             done = np.logical_or(terminated, truncated)
             rewards[step] = torch.tensor(reward).to(device).view(-1)
             next_obs, next_done = torch.Tensor(next_obs).to(device), torch.Tensor(done).to(device)

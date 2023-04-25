@@ -6,7 +6,7 @@ from quantum_envs.envs.GateCalibration.quantum_environment import QuantumEnviron
 from quantum_envs.envs.GateCalibration.target import CNOT
 from quantum_envs.envs.GateCalibration.static import AbstractionLevel
 
-class GateCalibrationEnvironment(gym.Env):
+class CNOTGateCalibrationEnvironment(gym.Env):
     metadata = {"render_modes": ["human"]}
 
     def __init__(self):
@@ -17,10 +17,7 @@ class GateCalibrationEnvironment(gym.Env):
         self.max_reward = 0.
         self.step_for_max_reward = 0
         self.episode_length = 0
-        self.simple_sample = True
-        self.simple_size = 4
-        assert type(self.simple_size) == int, "Type for sampling must be int"
-        assert self.simple_size > 0 and self.simple_size < 16, "Sample Size must be greater than 0 and less than 16"
+        self.complete_tomography_state_size = len(self.qenvironment.target.input_states)
 
         self.action_space = Box(
             low=-1.0, high=1.0, shape=(self.n_actions,), dtype=np.float64
@@ -50,12 +47,14 @@ class GateCalibrationEnvironment(gym.Env):
         info = self._get_info()
         return observation, info
     
-    def step(self, action):
+    def step(self, action, simple_sample=0):
         ### Single Length Episode ###
         self.episode_length += 1
 
-        index = np.random.randint(16)
-        if self.simple_sample:
+        assert simple_sample.type == int, "Only an integer number of input samples can be used"
+        assert simple_sample > 0 and simple_sample < self.complete_tomography_state_size, f"Size must be greater than 0 and less than or equal to {self.complete_tomography_state_size}"
+        index = np.random.randint(self.complete_tomography_state_size)
+        if not self.simple_sample == 0:
             index = np.random.randint(self.simple_size)
         self.reward = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
         if np.max(self.reward) > self.max_reward:

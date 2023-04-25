@@ -1,1 +1,1 @@
-from quantum_envs.envs.GateCalibration.environment import GateCalibrationEnvironment
+from quantum_envs.envs.GateCalibration.environment import CNOTGateCalibrationEnvironment

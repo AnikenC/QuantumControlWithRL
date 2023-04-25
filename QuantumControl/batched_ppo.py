@@ -14,7 +14,7 @@ from torch.distributions.normal import Normal
 from torch.utils.tensorboard import SummaryWriter
 from torch.autograd import Variable
 
-from quantum_classes import AlternateSyncVectorEnv
+from quantum_classes import BatchedCustomSyncVectorEnv
 
 import quantum_envs
 
@@ -41,6 +41,8 @@ def parse_args():
         help="the entity (team) of wandb's project")
     parser.add_argument("--capture-video", type=lambda x: bool(strtobool(x)), default=False, nargs="?", const=True,
         help="whether to capture videos of the agent performances (check out `videos` folder)")
+    parser.add_argument("--simple-sample-size", type=int, default=0, nargs="?", const=True,
+        help="For Gate Calibration tasks this variable is used for the input state sample size")
 
     # Algorithm specific arguments
     parser.add_argument("--env-id", type=str, default="quantum_envs/QuantumGateCalibration-v0",
@@ -166,7 +168,7 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
 
     # env setup
-    envs = AlternateSyncVectorEnv(
+    envs = BatchedCustomSyncVectorEnv(
         [make_env(args.env_id, i, args.capture_video, run_name, args.gamma) for i in range(args.num_envs)],
         num_steps = args.num_steps
     )
@@ -213,7 +215,7 @@ if __name__ == "__main__":
 
         ### Remember to specify the number of actions for the third dimension, in this case 7
         reshaped_action = actions.cpu().numpy().reshape((args.num_envs, args.num_steps, 7))
-        new_obs, reward, terminated, truncated, infos = envs.step(reshaped_action)
+        new_obs, reward, terminated, truncated, infos = envs.step(reshaped_action, args.simple_sample_size)
         rewards = torch.tensor(np.transpose(reward)).to(device) # Because we did some reshaping
 
         for info in infos["final_info"]:
