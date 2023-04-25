@@ -1,0 +1,106 @@
+
+ibmqfactory.load_account:WARNING:2023-04-25 12:24:28,442: Credentials are already in use. The existing account in the session will be replaced.
+ibmqfactory.load_account:WARNING:2023-04-25 12:24:51,633: Credentials are already in use. The existing account in the session will be replaced.
+ibmqfactory.load_account:WARNING:2023-04-25 12:25:13,440: Credentials are already in use. The existing account in the session will be replaced.
+[33m[W 2023-04-25 12:41:54,895][39m Trial 0 failed with parameters: {'num-minibatches': 1, 'update-epochs': 1, 'num-steps': 5} because of the following error: KeyboardInterrupt().
+Traceback (most recent call last):
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/optuna/study/_optimize.py", line 200, in _run_trial
+    value_or_values = func(trial)
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/cleanrl_module/cleanrl_utils/tuner.py", line 92, in objective
+    experiment = runpy.run_path(path_name=self.script, run_name="__main__")
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/runpy.py", line 268, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/runpy.py", line 97, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "ppo.py", line 212, in <module>
+    next_obs, reward, terminated, truncated, infos = envs.step(action.cpu().numpy())
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/vector/vector_env.py", line 197, in step
+    return self.step_wait()
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/vector/sync_vector_env.py", line 150, in step_wait
+    ) = env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 503, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/normalize.py", line 129, in step
+    obs, rews, terminateds, truncateds, infos = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 462, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/normalize.py", line 74, in step
+    obs, rews, terminateds, truncateds, infos = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 551, in step
+    return self.env.step(self.action(action))
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/record_episode_statistics.py", line 85, in step
+    ) = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 462, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/time_limit.py", line 50, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/order_enforcing.py", line 37, in step
+    return self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/env_checker.py", line 39, in step
+    return self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/quantum_envs/envs/GateCalibration/environment.py", line 60, in step
+    self.reward = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/quantum_envs/envs/GateCalibration/quantum_environment.py", line 295, in perform_action_gate_cal
+    self.parametrized_circuit_func(parametrized_circ)
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/quantum_envs/envs/GateCalibration/utils.py", line 19, in apply_parametrized_circuit
+    qc.rzx(2 * np.pi * params[6], 0, 1)
+KeyboardInterrupt
+[33m[W 2023-04-25 12:41:54,912][39m Trial 0 failed with value None.
+Traceback (most recent call last):
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/hyperparam_tuner.py", line 38, in <module>
+    tuner.tune(
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/cleanrl_module/cleanrl_utils/tuner.py", line 141, in tune
+    study.optimize(
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/optuna/study/study.py", line 425, in optimize
+    _optimize(
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/optuna/study/_optimize.py", line 66, in _optimize
+    _optimize_sequential(
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/optuna/study/_optimize.py", line 163, in _optimize_sequential
+    frozen_trial = _run_trial(study, func, catch)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/optuna/study/_optimize.py", line 251, in _run_trial
+    raise func_err
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/optuna/study/_optimize.py", line 200, in _run_trial
+    value_or_values = func(trial)
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/cleanrl_module/cleanrl_utils/tuner.py", line 92, in objective
+    experiment = runpy.run_path(path_name=self.script, run_name="__main__")
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/runpy.py", line 268, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/runpy.py", line 97, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "ppo.py", line 212, in <module>
+    next_obs, reward, terminated, truncated, infos = envs.step(action.cpu().numpy())
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/vector/vector_env.py", line 197, in step
+    return self.step_wait()
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/vector/sync_vector_env.py", line 150, in step_wait
+    ) = env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 503, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/normalize.py", line 129, in step
+    obs, rews, terminateds, truncateds, infos = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 462, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/normalize.py", line 74, in step
+    obs, rews, terminateds, truncateds, infos = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 551, in step
+    return self.env.step(self.action(action))
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/record_episode_statistics.py", line 85, in step
+    ) = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 462, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/time_limit.py", line 50, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/order_enforcing.py", line 37, in step
+    return self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/env_checker.py", line 39, in step
+    return self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/quantum_envs/envs/GateCalibration/environment.py", line 60, in step
+    self.reward = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/quantum_envs/envs/GateCalibration/quantum_environment.py", line 295, in perform_action_gate_cal
+    self.parametrized_circuit_func(parametrized_circ)
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/quantum_envs/envs/GateCalibration/utils.py", line 19, in apply_parametrized_circuit
+    qc.rzx(2 * np.pi * params[6], 0, 1)
+KeyboardInterrupt

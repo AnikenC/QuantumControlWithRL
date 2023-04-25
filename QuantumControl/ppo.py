@@ -81,7 +81,6 @@ def parse_args():
 def make_env(env_id, idx, capture_video, run_name, gamma):
     def thunk():
         env = gym.make(env_id)
-        print(env.action_space.shape)
         env = gym.wrappers.FlattenObservation(env)  # deal with dm_control's Dict observation space
         env = gym.wrappers.RecordEpisodeStatistics(env)
         if capture_video:

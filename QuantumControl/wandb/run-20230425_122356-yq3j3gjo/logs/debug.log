@@ -1,0 +1,28 @@
+2023-04-25 12:23:56,017 INFO    MainThread:47257 [wandb_setup.py:_flush():76] Configure stats pid to 47257
+2023-04-25 12:23:56,017 INFO    MainThread:47257 [wandb_setup.py:_flush():76] Loading settings from /Users/chatt07/.config/wandb/settings
+2023-04-25 12:23:56,017 INFO    MainThread:47257 [wandb_setup.py:_flush():76] Loading settings from /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/wandb/settings
+2023-04-25 12:23:56,018 INFO    MainThread:47257 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-04-25 12:23:56,018 INFO    MainThread:47257 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-04-25 12:23:56,018 INFO    MainThread:47257 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'QuantumControl/hyperparam_tuner.py', 'program': '/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/hyperparam_tuner.py'}
+2023-04-25 12:23:56,018 INFO    MainThread:47257 [wandb_init.py:_log_setup():506] Logging user logs to /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/wandb/run-20230425_122356-yq3j3gjo/logs/debug.log
+2023-04-25 12:23:56,018 INFO    MainThread:47257 [wandb_init.py:_log_setup():507] Logging internal logs to /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/wandb/run-20230425_122356-yq3j3gjo/logs/debug-internal.log
+2023-04-25 12:23:56,019 INFO    MainThread:47257 [wandb_init.py:init():546] calling init triggers
+2023-04-25 12:23:56,019 INFO    MainThread:47257 [wandb_init.py:init():552] wandb.init called with sweep_config: {}
+config: {'num-minibatches': 1, 'update-epochs': 1, 'num-steps': 5, 'total-timesteps': 100000, 'num-envs': 4}
+2023-04-25 12:23:56,019 INFO    MainThread:47257 [wandb_init.py:init():602] starting backend
+2023-04-25 12:23:56,019 INFO    MainThread:47257 [wandb_init.py:init():606] setting up manager
+2023-04-25 12:23:56,027 INFO    MainThread:47257 [backend.py:_multiprocessing_setup():106] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2023-04-25 12:23:56,039 INFO    MainThread:47257 [wandb_init.py:init():613] backend started and connected
+2023-04-25 12:23:56,047 INFO    MainThread:47257 [wandb_init.py:init():701] updated telemetry
+2023-04-25 12:23:56,101 INFO    MainThread:47257 [wandb_init.py:init():741] communicating run to backend with 60.0 second timeout
+2023-04-25 12:23:56,945 INFO    MainThread:47257 [wandb_run.py:_on_init():2131] communicating current version
+2023-04-25 12:23:57,007 INFO    MainThread:47257 [wandb_run.py:_on_init():2140] got version response upgrade_message: "wandb version 0.15.0 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2023-04-25 12:23:57,007 INFO    MainThread:47257 [wandb_init.py:init():789] starting run threads in backend
+2023-04-25 12:23:57,343 INFO    MainThread:47257 [wandb_run.py:_console_start():2112] atexit reg
+2023-04-25 12:23:57,344 INFO    MainThread:47257 [wandb_run.py:_redirect():1967] redirect: SettingsConsole.WRAP_RAW
+2023-04-25 12:23:57,345 INFO    MainThread:47257 [wandb_run.py:_redirect():2032] Wrapping output streams.
+2023-04-25 12:23:57,345 INFO    MainThread:47257 [wandb_run.py:_redirect():2057] Redirects installed.
+2023-04-25 12:23:57,346 INFO    MainThread:47257 [wandb_init.py:init():831] run started, returning control to user process
+2023-04-25 12:23:57,469 INFO    MainThread:47257 [wandb_run.py:_tensorboard_callback():1394] tensorboard callback: runs/quantum_envs/QuantumGateCalibration-v0__ppo__0__1682396637, True
+2023-04-25 12:42:13,200 WARNING MsgRouterThr:47257 [router.py:message_loop():77] message_loop has been closed
