@@ -18,6 +18,8 @@ mujoco = "^2.3.4"
 redis = "^4.5.4"
 gymnasium = "^0.28.1"
 torch = "^2.0.0"
+jax = "^0.4.8"
+flax = "^0.6.9"
 
 
 [build-system]
