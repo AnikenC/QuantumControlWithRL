@@ -131,7 +131,7 @@ class Agent(nn.Module):
         return self.critic(x)
 
     def get_action_and_value(self, x, action=None):
-        action_mean = self.actor_mean(x.to(device))
+        action_mean = self.actor_mean(x)
         action_logstd = self.actor_logstd.expand_as(action_mean)
         action_std = torch.exp(action_logstd)
         probs = Normal(action_mean, action_std)
@@ -139,7 +139,7 @@ class Agent(nn.Module):
             action = probs.sample()
         else:  # new to RPO
             # sample again to add stochasticity to the policy
-            z = torch.FloatTensor(action_mean.shape, device="cpu").uniform_(-self.rpo_alpha, self.rpo_alpha)
+            z = torch.FloatTensor(action_mean.shape).uniform_(-self.rpo_alpha, self.rpo_alpha).to(device)
             action_mean = action_mean + z
             probs = Normal(action_mean, action_std)
 
