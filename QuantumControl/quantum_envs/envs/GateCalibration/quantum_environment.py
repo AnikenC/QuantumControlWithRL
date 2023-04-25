@@ -33,7 +33,7 @@ class QuantumEnvironment:
     QUA_setup: Optional[Dict] = None
 
     def init_qiskit_setup(self):
-        IBMQ.load_account()
+        #IBMQ.load_account()
         service = QiskitRuntimeService(
             channel="ibm_quantum",
             token="4c8ba089b15930777fc8d5501ed739bccaee58f5d9c3b13541776638606834593af6e9b1467ab224ffca2022914cea2e0782958a62c5eb4f2a84d008e12c42e2",

@@ -16,6 +16,8 @@ dill = "^0.3.6"
 glfw = "^2.5.9"
 mujoco = "^2.3.4"
 redis = "^4.5.4"
+gymnasium = "^0.28.1"
+torch = "^2.0.0"
 
 
 [build-system]
