@@ -2,11 +2,14 @@ import numpy as np
 import gymnasium as gym
 from gymnasium.spaces import Box
 
-from quantum_envs.envs.GateCalibration.quantum_environment import QuantumEnvironment
-from quantum_envs.envs.GateCalibration.target import CNOT
-from quantum_envs.envs.GateCalibration.static import AbstractionLevel
+from quantum_envs.envs.CNOTGateCalibration_v1.quantum_environment import QuantumEnvironment
+from quantum_envs.envs.CNOTGateCalibration_v1.target import CNOT
+from quantum_envs.envs.CNOTGateCalibration_v1.static import AbstractionLevel
 
-class CNOTGateCalibrationEnvironment(gym.Env):
+### Version 1 ###
+# Uses Average Fidelity as Reward
+
+class CNOTGateCalibrationEnvironment_V1(gym.Env):
     metadata = {"render_modes": ["human"]}
 
     def __init__(self):
@@ -17,7 +20,7 @@ class CNOTGateCalibrationEnvironment(gym.Env):
         self.max_reward = 0.
         self.step_for_max_reward = 0
         self.episode_length = 0
-        self.simple_sample = 4
+        self.simple_sample = 1
         self.complete_tomography_state_size = len(self.qenvironment.target.input_states)
         self.process_fidelity = 0.
         self.average_fidelity = 0.
@@ -72,4 +75,4 @@ class CNOTGateCalibrationEnvironment(gym.Env):
             self.episode_length = 0
         if len(self.reward) == 1:
             self.reward = self.reward[0]
-        return observation, self.reward, terminated, False, info
+        return observation, self.average_fidelity, terminated, False, info

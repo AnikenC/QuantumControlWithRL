@@ -21,9 +21,9 @@ from qiskit.quantum_info import (
 
 from qiskit_ibm_runtime import QiskitRuntimeService, Session
 
-from quantum_envs.envs.GateCalibration.qconfig import QiskitConfig
-from quantum_envs.envs.GateCalibration.static import AbstractionLevel
-from quantum_envs.envs.GateCalibration.utils import apply_parametrized_circuit
+from quantum_envs.envs.CNOTGateCalibration_v1.qconfig import QiskitConfig
+from quantum_envs.envs.CNOTGateCalibration_v1.static import AbstractionLevel
+from quantum_envs.envs.CNOTGateCalibration_v1.utils import apply_parametrized_circuit
 
 @dataclass
 class QuantumEnvironment:
