@@ -17,8 +17,8 @@ class GateCalibrationEnvironment(gym.Env):
         self.max_reward = 0.
         self.step_for_max_reward = 0
         self.episode_length = 0
-        self.simple_sample = False
-        self.simple_size = 2
+        self.simple_sample = True
+        self.simple_size = 4
         assert type(self.simple_size) == int, "Type for sampling must be int"
         assert self.simple_size > 0 and self.simple_size < 16, "Sample Size must be greater than 0 and less than 16"
 

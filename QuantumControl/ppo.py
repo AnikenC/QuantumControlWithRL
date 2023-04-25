@@ -33,6 +33,13 @@ def parse_args():
         help="the wandb's project name")
     parser.add_argument("--wandb-entity", type=str, default="quantumcontrolwithrl",
         help="the entity (team) of wandb's project")
+    parser.add_argument("--group-name", type=str, default="complete_tomography_state", nargs="?", const=True,
+        help="the group name of the experiment (what type of sub-environment is being experimented on)")
+    ### Convention for Group Names for Circuit-Level Gate Calibration ###
+    # 1. complete_tomography_state
+    # 2. {n}_input_states , where n is the number of input states you specify in the environment
+    parser.add_argument("--job-type", type=str, default="train", nargs="?", const=True,
+        help="the purpose of the experiment being run")
     parser.add_argument("--capture-video", type=lambda x: bool(strtobool(x)), default=False, nargs="?", const=True,
         help="whether to capture videos of the agent performances (check out `videos` folder)")
 
@@ -146,8 +153,8 @@ if __name__ == "__main__":
             sync_tensorboard=True,
             config=vars(args),
             name=run_name,
-            # monitor_gym=True, no longer works for gymnasium
             save_code=True,
+            group=args.group_name,
         )
     writer = SummaryWriter(f"runs/{run_name}")
     writer.add_text(
