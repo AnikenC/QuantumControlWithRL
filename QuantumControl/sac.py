@@ -31,10 +31,17 @@ def parse_args():
         help="if toggled, cuda will be enabled by default")
     parser.add_argument("--track", type=lambda x: bool(strtobool(x)), default=False, nargs="?", const=True,
         help="if toggled, this experiment will be tracked with Weights and Biases")
-    parser.add_argument("--wandb-project-name", type=str, default="cleanRL",
+    parser.add_argument("--wandb-project-name", type=str, default="GateCalibration",
         help="the wandb's project name")
-    parser.add_argument("--wandb-entity", type=str, default=None,
+    parser.add_argument("--wandb-entity", type=str, default="quantumcontrolwithrl",
         help="the entity (team) of wandb's project")
+    parser.add_argument("--group-name", type=str, default="complete_tomography_state", nargs="?", const=True,
+        help="the group name of the experiment (what type of sub-environment is being experimented on)")
+    ### Convention for Group Names for Circuit-Level Gate Calibration ###
+    # 1. complete_tomography_state
+    # 2. {n}_input_states , where n is the number of input states you specify in the environment
+    parser.add_argument("--job-type", type=str, default="train", nargs="?", const=True,
+        help="the purpose of the experiment being run")
     parser.add_argument("--capture-video", type=lambda x: bool(strtobool(x)), default=False, nargs="?", const=True,
         help="whether to capture videos of the agent performances (check out `videos` folder)")
 
@@ -227,10 +234,14 @@ if __name__ == "__main__":
         # TRY NOT TO MODIFY: record rewards for plotting purposes
         for info in infos:
             if "episode" in info.keys():
-                print(f"global_step={global_step}, episodic_return={info['episode']['r']}")
-                writer.add_scalar("charts/episodic_return", info["episode"]["r"], global_step)
-                writer.add_scalar("charts/episodic_length", info["episode"]["l"], global_step)
-                break
+                temp_return = info["mean reward"]
+                max_reward_at_step = info["step for max"]
+                max_reward = info["max reward"]
+                #print(f"global_step={global_step}, episodic_return={temp_return}, delta={delta}")
+                #print(f"max reward of {max_reward} at step {max_reward_at_step}")
+                writer.add_scalar("charts/episodic_return", temp_return, global_step)
+                #writer.add_scalar("charts/normalized_episodic_return", np.mean(reward), global_step)
+                writer.add_scalar("charts/episodic_length", info["episode length"], global_step)
 
         # TRY NOT TO MODIFY: save data to reply buffer; handle `terminal_observation`
         real_next_obs = next_obs.copy()
