@@ -221,8 +221,8 @@ if __name__ == "__main__":
             max_reward_at_step = info["step for max"]
             max_reward = info["max reward"]
 
-            print(f"global_step={global_step}, mean reward in update={temp_return}")
-            print(f"max reward of {max_reward} at step {max_reward_at_step}")
+            #print(f"global_step={global_step}, mean reward in update={temp_return}")
+            #print(f"max reward of {max_reward} at step {max_reward_at_step}")
 
             writer.add_scalar("charts/episodic_return", temp_return, global_step)
             writer.add_scalar("charts/normalized_episodic_return", np.mean(reward), global_step)
