@@ -58,7 +58,7 @@ class CNOTGateCalibrationEnvironment(gym.Env):
 
         index = np.random.randint(self.complete_tomography_state_size)
         if not self.simple_sample == 0:
-            index = np.random.randint(self.simple_size)
+            index = np.random.randint(self.simple_sample)
         self.reward, average_fidelity, process_fidelity = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
         self.process_fidelity = process_fidelity
         self.average_fidelity = average_fidelity
