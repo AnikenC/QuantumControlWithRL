@@ -6,7 +6,7 @@ authors = ["AnikenC <quantac47@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.9.11"
+python = "~3.9"
 qiskit = "^0.42.1"
 qiskit-ibm-runtime = "^0.9.3"
 tensorflow = "^2.12.0"
