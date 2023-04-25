@@ -117,14 +117,14 @@ class Agent(nn.Module):
             layer_init(nn.Linear(64, 64)),
             nn.Tanh(),
             layer_init(nn.Linear(64, 1), std=1.0),
-        )
+        ).to(device)
         self.actor_mean = nn.Sequential(
             layer_init(nn.Linear(np.array(envs.single_observation_space.shape).prod(), 64)),
             nn.Tanh(),
             layer_init(nn.Linear(64, 64)),
             nn.Tanh(),
             layer_init(nn.Linear(64, np.prod(envs.single_action_space.shape)), std=0.01),
-        )
+        ).to(device)
         self.actor_logstd = nn.Parameter(torch.zeros(1, np.prod(envs.single_action_space.shape)))
 
     def get_value(self, x):
@@ -140,6 +140,8 @@ class Agent(nn.Module):
         else:  # new to RPO
             # sample again to add stochasticity to the policy
             z = torch.FloatTensor(action_mean.shape).uniform_(-self.rpo_alpha, self.rpo_alpha)
+            print(z.device)
+            print(action_mean.device)
             action_mean = action_mean + z
             probs = Normal(action_mean, action_std)
 
