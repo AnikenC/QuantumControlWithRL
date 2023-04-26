@@ -12,8 +12,8 @@ def apply_parametrized_circuit(qc: QuantumCircuit):
     # global n_actions
     # TODO: Parametrize the n_action (7)
     params = ParameterVector("theta", 7)
-    qc.u(2 * np.pi * params[0], 2 * np.pi * params[1], 2 * np.pi * params[2], 0)
+    qc.u(np.pi * params[0], np.pi * params[1], np.pi * params[2], 0)
     #qc.rx(2*np.pi*params[0], 0) # Added
     #qc.u(2 * np.pi * params[3], 2 * np.pi * params[4], 2 * np.pi * params[5], 0) # Added
-    qc.u(2 * np.pi * params[3], 2 * np.pi * params[4], 2 * np.pi * params[5], 1)
-    qc.rzx(2 * np.pi * params[6], 0, 1)
+    qc.u(np.pi * params[3], np.pi * params[4], np.pi * params[5], 1)
+    qc.rzx(np.pi * params[6], 0, 1)

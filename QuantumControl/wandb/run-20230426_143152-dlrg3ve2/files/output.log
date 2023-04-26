@@ -1,0 +1,13 @@
+/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/envs/registration.py:523: DeprecationWarning: [33mWARN: The environment quantum_envs/CNOTGateCalibration-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+SPS: 50
+SPS: 55
+SPS: 45
+SPS: 43
+SPS: 45
+SPS: 46
+Traceback (most recent call last):
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/ppo.py", line 214, in <module>
+    values[step] = value.flatten()
+KeyboardInterrupt
+SPS: 46

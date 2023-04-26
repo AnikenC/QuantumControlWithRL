@@ -23,20 +23,19 @@ from qiskit_ibm_runtime import QiskitRuntimeService, Session
 
 from quantum_envs.envs.CNOTGateCalibration_v1.qconfig import QiskitConfig
 from quantum_envs.envs.CNOTGateCalibration_v1.static import AbstractionLevel
-from quantum_envs.envs.CNOTGateCalibration_v1.utils import apply_parametrized_circuit
+from quantum_envs.envs.CNOTGateCalibration_v1.simple_utils import apply_parametrized_circuit
 
 @dataclass
 class QuantumEnvironment:
     abstraction_level: AbstractionLevel
     target: Dict  # TODO: Create its own type for clarity
-    config_path: str = r"/Users/chatt07/Desktop/clean_env/Modif/quantum_environment_config.yml"
     QUA_setup: Optional[Dict] = None
 
     def init_qiskit_setup(self):
         #IBMQ.load_account()
         service = QiskitRuntimeService(
             channel="ibm_quantum",
-            token="4c8ba089b15930777fc8d5501ed739bccaee58f5d9c3b13541776638606834593af6e9b1467ab224ffca2022914cea2e0782958a62c5eb4f2a84d008e12c42e2",
+            #token="4c8ba089b15930777fc8d5501ed739bccaee58f5d9c3b13541776638606834593af6e9b1467ab224ffca2022914cea2e0782958a62c5eb4f2a84d008e12c42e2",
         )
         backend = service.backends(simulator=True)[
             0

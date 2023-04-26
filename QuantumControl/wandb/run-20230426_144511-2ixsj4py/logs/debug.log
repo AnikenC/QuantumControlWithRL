@@ -1,0 +1,28 @@
+2023-04-26 14:45:11,652 INFO    MainThread:96599 [wandb_setup.py:_flush():76] Configure stats pid to 96599
+2023-04-26 14:45:11,652 INFO    MainThread:96599 [wandb_setup.py:_flush():76] Loading settings from /Users/chatt07/.config/wandb/settings
+2023-04-26 14:45:11,652 INFO    MainThread:96599 [wandb_setup.py:_flush():76] Loading settings from /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/wandb/settings
+2023-04-26 14:45:11,652 INFO    MainThread:96599 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-04-26 14:45:11,652 INFO    MainThread:96599 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-04-26 14:45:11,652 INFO    MainThread:96599 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'QuantumControl/ppo.py', 'program': '/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/ppo.py'}
+2023-04-26 14:45:11,652 INFO    MainThread:96599 [wandb_init.py:_log_setup():506] Logging user logs to /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/wandb/run-20230426_144511-2ixsj4py/logs/debug.log
+2023-04-26 14:45:11,653 INFO    MainThread:96599 [wandb_init.py:_log_setup():507] Logging internal logs to /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/wandb/run-20230426_144511-2ixsj4py/logs/debug-internal.log
+2023-04-26 14:45:11,653 INFO    MainThread:96599 [wandb_init.py:init():546] calling init triggers
+2023-04-26 14:45:11,653 INFO    MainThread:96599 [wandb_init.py:init():552] wandb.init called with sweep_config: {}
+config: {'exp_name': 'ppo', 'seed': 1, 'torch_deterministic': True, 'cuda': True, 'track': True, 'wandb_project_name': 'GateCalibration', 'wandb_entity': 'quantumcontrolwithrl', 'group_name': 'complete_tomography_state', 'job_type': 'train', 'capture_video': False, 'env_id': 'quantum_envs/CNOTGateCalibration-v0', 'total_timesteps': 1000000, 'learning_rate': 0.0003, 'num_envs': 1, 'num_steps': 256, 'anneal_lr': True, 'gamma': 0.99, 'gae_lambda': 0.95, 'num_minibatches': 2, 'update_epochs': 5, 'norm_adv': True, 'clip_coef': 0.2, 'clip_vloss': True, 'ent_coef': 0.0, 'vf_coef': 0.5, 'max_grad_norm': 0.5, 'target_kl': None, 'batch_size': 256, 'minibatch_size': 128}
+2023-04-26 14:45:11,653 INFO    MainThread:96599 [wandb_init.py:init():602] starting backend
+2023-04-26 14:45:11,654 INFO    MainThread:96599 [wandb_init.py:init():606] setting up manager
+2023-04-26 14:45:11,675 INFO    MainThread:96599 [backend.py:_multiprocessing_setup():106] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2023-04-26 14:45:11,716 INFO    MainThread:96599 [wandb_init.py:init():613] backend started and connected
+2023-04-26 14:45:11,748 INFO    MainThread:96599 [wandb_init.py:init():701] updated telemetry
+2023-04-26 14:45:11,832 INFO    MainThread:96599 [wandb_init.py:init():741] communicating run to backend with 60.0 second timeout
+2023-04-26 14:45:12,549 INFO    MainThread:96599 [wandb_run.py:_on_init():2131] communicating current version
+2023-04-26 14:45:12,618 INFO    MainThread:96599 [wandb_run.py:_on_init():2140] got version response upgrade_message: "wandb version 0.15.0 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2023-04-26 14:45:12,618 INFO    MainThread:96599 [wandb_init.py:init():789] starting run threads in backend
+2023-04-26 14:45:13,082 INFO    MainThread:96599 [wandb_run.py:_console_start():2112] atexit reg
+2023-04-26 14:45:13,083 INFO    MainThread:96599 [wandb_run.py:_redirect():1967] redirect: SettingsConsole.WRAP_RAW
+2023-04-26 14:45:13,084 INFO    MainThread:96599 [wandb_run.py:_redirect():2032] Wrapping output streams.
+2023-04-26 14:45:13,089 INFO    MainThread:96599 [wandb_run.py:_redirect():2057] Redirects installed.
+2023-04-26 14:45:13,091 INFO    MainThread:96599 [wandb_init.py:init():831] run started, returning control to user process
+2023-04-26 14:45:13,093 INFO    MainThread:96599 [wandb_run.py:_tensorboard_callback():1394] tensorboard callback: runs/quantum_envs/CNOTGateCalibration-v0__ppo__1__1682491508, True
+2023-04-26 14:45:46,687 WARNING MsgRouterThr:96599 [router.py:message_loop():77] message_loop has been closed
