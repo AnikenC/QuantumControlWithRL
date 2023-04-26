@@ -1,0 +1,28 @@
+2023-04-26 19:38:17,740 INFO    MainThread:11201 [wandb_setup.py:_flush():76] Configure stats pid to 11201
+2023-04-26 19:38:17,741 INFO    MainThread:11201 [wandb_setup.py:_flush():76] Loading settings from /Users/chatt07/.config/wandb/settings
+2023-04-26 19:38:17,741 INFO    MainThread:11201 [wandb_setup.py:_flush():76] Loading settings from /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/settings
+2023-04-26 19:38:17,741 INFO    MainThread:11201 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-04-26 19:38:17,741 INFO    MainThread:11201 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-04-26 19:38:17,741 INFO    MainThread:11201 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'QuantumControl/sac.py', 'program': '/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/sac.py'}
+2023-04-26 19:38:17,741 INFO    MainThread:11201 [wandb_init.py:_log_setup():506] Logging user logs to /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193817-fhod0u7a/logs/debug.log
+2023-04-26 19:38:17,742 INFO    MainThread:11201 [wandb_init.py:_log_setup():507] Logging internal logs to /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193817-fhod0u7a/logs/debug-internal.log
+2023-04-26 19:38:17,742 INFO    MainThread:11201 [wandb_init.py:init():546] calling init triggers
+2023-04-26 19:38:17,742 INFO    MainThread:11201 [wandb_init.py:init():552] wandb.init called with sweep_config: {}
+config: {'exp_name': 'sac', 'seed': 1, 'torch_deterministic': True, 'cuda': True, 'track': True, 'wandb_project_name': 'GateCalibration', 'wandb_entity': 'quantumcontrolwithrl', 'group_name': 'complete_tomography_state', 'job_type': 'train', 'capture_video': False, 'env_id': 'quantum_envs/CNOTGateCalibration-v0', 'total_timesteps': 100000, 'buffer_size': 100000, 'gamma': 0.99, 'tau': 0.005, 'batch_size': 256, 'learning_starts': 5000.0, 'policy_lr': 0.018, 'q_lr': 0.001, 'policy_frequency': 2, 'target_network_frequency': 1, 'noise_clip': 0.5, 'alpha': 0.2, 'autotune': True}
+2023-04-26 19:38:17,743 INFO    MainThread:11201 [wandb_init.py:init():602] starting backend
+2023-04-26 19:38:17,743 INFO    MainThread:11201 [wandb_init.py:init():606] setting up manager
+2023-04-26 19:38:17,767 INFO    MainThread:11201 [backend.py:_multiprocessing_setup():106] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2023-04-26 19:38:17,779 INFO    MainThread:11201 [wandb_init.py:init():613] backend started and connected
+2023-04-26 19:38:17,826 INFO    MainThread:11201 [wandb_init.py:init():701] updated telemetry
+2023-04-26 19:38:17,870 INFO    MainThread:11201 [wandb_init.py:init():741] communicating run to backend with 60.0 second timeout
+2023-04-26 19:38:18,590 INFO    MainThread:11201 [wandb_run.py:_on_init():2131] communicating current version
+2023-04-26 19:38:18,651 INFO    MainThread:11201 [wandb_run.py:_on_init():2140] got version response upgrade_message: "wandb version 0.15.0 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2023-04-26 19:38:18,651 INFO    MainThread:11201 [wandb_init.py:init():789] starting run threads in backend
+2023-04-26 19:38:18,978 INFO    MainThread:11201 [wandb_run.py:_console_start():2112] atexit reg
+2023-04-26 19:38:18,978 INFO    MainThread:11201 [wandb_run.py:_redirect():1967] redirect: SettingsConsole.WRAP_RAW
+2023-04-26 19:38:18,979 INFO    MainThread:11201 [wandb_run.py:_redirect():2032] Wrapping output streams.
+2023-04-26 19:38:18,980 INFO    MainThread:11201 [wandb_run.py:_redirect():2057] Redirects installed.
+2023-04-26 19:38:18,981 INFO    MainThread:11201 [wandb_init.py:init():831] run started, returning control to user process
+2023-04-26 19:38:18,984 INFO    MainThread:11201 [wandb_run.py:_tensorboard_callback():1394] tensorboard callback: runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682509091, True
+2023-04-26 19:39:00,099 WARNING MsgRouterThr:11201 [router.py:message_loop():77] message_loop has been closed

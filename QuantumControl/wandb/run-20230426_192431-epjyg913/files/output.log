@@ -1,0 +1,19 @@
+/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/envs/registration.py:523: DeprecationWarning: [33mWARN: The environment quantum_envs/CNOTGateCalibration-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+Traceback (most recent call last):
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/sac.py", line 188, in <module>
+    envs = gym.vector.SyncVectorEnv([make_env(args.env_id, args.seed, 0, args.capture_video, run_name)])
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/vector/sync_vector_env.py", line 53, in __init__
+    self.envs = [env_fn() for env_fn in env_fns]
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/vector/sync_vector_env.py", line 53, in <listcomp>
+    self.envs = [env_fn() for env_fn in env_fns]
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/sac.py", line 90, in thunk
+    env.seed(seed)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 282, in __getattr__
+    return getattr(self.env, name)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 282, in __getattr__
+    return getattr(self.env, name)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 282, in __getattr__
+    return getattr(self.env, name)
+  [Previous line repeated 1 more time]
+AttributeError: 'CNOTGateCalibrationEnvironment_V0' object has no attribute 'seed'

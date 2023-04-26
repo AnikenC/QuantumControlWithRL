@@ -1,0 +1,119 @@
+diff --git a/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc b/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc
+index b1b8968..88cda7f 100644
+Binary files a/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc and b/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc differ
+diff --git a/QuantumControl/sac.py b/QuantumControl/sac.py
+index c476076..3dfb34e 100644
+--- a/QuantumControl/sac.py
++++ b/QuantumControl/sac.py
+@@ -5,7 +5,7 @@ import random
+ import time
+ from distutils.util import strtobool
+ 
+-import gym
++import gymnasium as gym
+ import numpy as np
+ #import pybullet_envs  # noqa
+ import torch
+@@ -47,11 +47,11 @@ def parse_args():
+         help="whether to capture videos of the agent performances (check out `videos` folder)")
+ 
+     # Algorithm specific arguments
+-    parser.add_argument("--env-id", type=str, default="HopperBulletEnv-v0",
++    parser.add_argument("--env-id", type=str, default="quantum_envs/CNOTGateCalibration-v0",
+         help="the id of the environment")
+-    parser.add_argument("--total-timesteps", type=int, default=1000000,
++    parser.add_argument("--total-timesteps", type=int, default=100000,
+         help="total timesteps of the experiments")
+-    parser.add_argument("--buffer-size", type=int, default=int(1e6),
++    parser.add_argument("--buffer-size", type=int, default=int(1e5),
+         help="the replay memory buffer size")
+     parser.add_argument("--gamma", type=float, default=0.99,
+         help="the discount factor gamma")
+@@ -61,7 +61,7 @@ def parse_args():
+         help="the batch size of sample from the reply memory")
+     parser.add_argument("--learning-starts", type=int, default=5e3,
+         help="timestep to start learning")
+-    parser.add_argument("--policy-lr", type=float, default=3e-4,
++    parser.add_argument("--policy-lr", type=float, default=0.018,
+         help="the learning rate of the policy network optimizer")
+     parser.add_argument("--q-lr", type=float, default=1e-3,
+         help="the learning rate of the Q network network optimizer")
+@@ -87,9 +87,9 @@ def make_env(env_id, seed, idx, capture_video, run_name):
+         if capture_video:
+             if idx == 0:
+                 env = gym.wrappers.RecordVideo(env, f"videos/{run_name}")
+-        env.seed(seed)
+-        env.action_space.seed(seed)
+-        env.observation_space.seed(seed)
++        #env.seed(seed)
++        #env.action_space.seed(seed)
++        #env.observation_space.seed(seed)
+         return env
+ 
+     return thunk
+@@ -167,7 +167,7 @@ if __name__ == "__main__":
+             sync_tensorboard=True,
+             config=vars(args),
+             name=run_name,
+-            monitor_gym=True,
++            #monitor_gym=True,
+             save_code=True,
+         )
+     writer = SummaryWriter(f"runs/{run_name}")
+@@ -220,7 +220,7 @@ if __name__ == "__main__":
+     start_time = time.time()
+ 
+     # TRY NOT TO MODIFY: start the game
+-    obs = envs.reset()
++    obs = envs.reset(seed=args.seed)
+     for global_step in range(args.total_timesteps):
+         # ALGO LOGIC: put action logic here
+         if global_step < args.learning_starts:
+diff --git a/QuantumControl/wandb/debug-cli.chatt07.log b/QuantumControl/wandb/debug-cli.chatt07.log
+index ed5054b..2d97dad 100644
+--- a/QuantumControl/wandb/debug-cli.chatt07.log
++++ b/QuantumControl/wandb/debug-cli.chatt07.log
+@@ -7,3 +7,16 @@
+ 2023-04-26 14:45:34 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__ppo__1__1682491508/events.out.tfevents.1682491513.Aniken.96599.0
+ 2023-04-26 14:45:35 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__ppo__1__1682491508/events.out.tfevents.1682491513.Aniken.96599.0
+ 2023-04-26 14:45:36 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__ppo__1__1682491508/events.out.tfevents.1682491513.Aniken.96599.0
++2023-04-26 19:24:47 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:48 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:49 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:50 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:51 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:51 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:51 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:52 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:53 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:54 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:55 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:56 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:57 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
+diff --git a/QuantumControl/wandb/debug-internal.log b/QuantumControl/wandb/debug-internal.log
+index 11aaa51..f3948df 120000
+--- a/QuantumControl/wandb/debug-internal.log
++++ b/QuantumControl/wandb/debug-internal.log
+@@ -1 +1 @@
+-run-20230426_144511-2ixsj4py/logs/debug-internal.log
+\ No newline at end of file
++run-20230426_192704-r1km7iv4/logs/debug-internal.log
+\ No newline at end of file
+diff --git a/QuantumControl/wandb/debug.log b/QuantumControl/wandb/debug.log
+index 141be8a..b01265e 120000
+--- a/QuantumControl/wandb/debug.log
++++ b/QuantumControl/wandb/debug.log
+@@ -1 +1 @@
+-run-20230426_144511-2ixsj4py/logs/debug.log
+\ No newline at end of file
++run-20230426_192704-r1km7iv4/logs/debug.log
+\ No newline at end of file
+diff --git a/QuantumControl/wandb/latest-run b/QuantumControl/wandb/latest-run
+index 805b7e7..1c97aa7 120000
+--- a/QuantumControl/wandb/latest-run
++++ b/QuantumControl/wandb/latest-run
+@@ -1 +1 @@
+-run-20230426_144511-2ixsj4py
+\ No newline at end of file
++run-20230426_192704-r1km7iv4
+\ No newline at end of file

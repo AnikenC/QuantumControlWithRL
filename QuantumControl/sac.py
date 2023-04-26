@@ -5,7 +5,7 @@ import random
 import time
 from distutils.util import strtobool
 
-import gym
+import gymnasium as gym
 import numpy as np
 #import pybullet_envs  # noqa
 import torch
@@ -47,11 +47,11 @@ def parse_args():
         help="whether to capture videos of the agent performances (check out `videos` folder)")
 
     # Algorithm specific arguments
-    parser.add_argument("--env-id", type=str, default="HopperBulletEnv-v0",
+    parser.add_argument("--env-id", type=str, default="quantum_envs/CNOTGateCalibration-v0",
         help="the id of the environment")
-    parser.add_argument("--total-timesteps", type=int, default=1000000,
+    parser.add_argument("--total-timesteps", type=int, default=100000,
         help="total timesteps of the experiments")
-    parser.add_argument("--buffer-size", type=int, default=int(1e6),
+    parser.add_argument("--buffer-size", type=int, default=int(1e5),
         help="the replay memory buffer size")
     parser.add_argument("--gamma", type=float, default=0.99,
         help="the discount factor gamma")
@@ -61,7 +61,7 @@ def parse_args():
         help="the batch size of sample from the reply memory")
     parser.add_argument("--learning-starts", type=int, default=5e3,
         help="timestep to start learning")
-    parser.add_argument("--policy-lr", type=float, default=3e-4,
+    parser.add_argument("--policy-lr", type=float, default=0.018,
         help="the learning rate of the policy network optimizer")
     parser.add_argument("--q-lr", type=float, default=1e-3,
         help="the learning rate of the Q network network optimizer")
@@ -87,9 +87,9 @@ def make_env(env_id, seed, idx, capture_video, run_name):
         if capture_video:
             if idx == 0:
                 env = gym.wrappers.RecordVideo(env, f"videos/{run_name}")
-        env.seed(seed)
-        env.action_space.seed(seed)
-        env.observation_space.seed(seed)
+        #env.seed(seed)
+        #env.action_space.seed(seed)
+        #env.observation_space.seed(seed)
         return env
 
     return thunk
@@ -167,7 +167,7 @@ if __name__ == "__main__":
             sync_tensorboard=True,
             config=vars(args),
             name=run_name,
-            monitor_gym=True,
+            #monitor_gym=True,
             save_code=True,
         )
     writer = SummaryWriter(f"runs/{run_name}")
@@ -220,7 +220,7 @@ if __name__ == "__main__":
     start_time = time.time()
 
     # TRY NOT TO MODIFY: start the game
-    obs = envs.reset()
+    obs = envs.reset(seed=args.seed)
     for global_step in range(args.total_timesteps):
         # ALGO LOGIC: put action logic here
         if global_step < args.learning_starts:
@@ -230,25 +230,25 @@ if __name__ == "__main__":
             actions = actions.detach().cpu().numpy()
 
         # TRY NOT TO MODIFY: execute the game and log data.
-        next_obs, rewards, dones, infos = envs.step(actions)
+        next_obs, rewards, dones, _, infos = envs.step(actions)
 
         # TRY NOT TO MODIFY: record rewards for plotting purposes
-        for info in infos:
-            if "episode" in info.keys():
-                temp_return = info["mean reward"]
-                max_reward_at_step = info["step for max"]
-                max_reward = info["max reward"]
-                #print(f"global_step={global_step}, episodic_return={temp_return}, delta={delta}")
-                #print(f"max reward of {max_reward} at step {max_reward_at_step}")
-                writer.add_scalar("charts/episodic_return", temp_return, global_step)
-                #writer.add_scalar("charts/normalized_episodic_return", np.mean(reward), global_step)
-                writer.add_scalar("charts/episodic_length", info["episode length"], global_step)
+        info = infos
+        temp_return = info["mean reward"]
+        max_reward_at_step = info["step for max"]
+        max_reward = info["max reward"]
+        #print(f"global_step={global_step}, episodic_return={temp_return}, delta={delta}")
+        #print(f"max reward of {max_reward} at step {max_reward_at_step}")
+        writer.add_scalar("charts/episodic_return", temp_return, global_step)
+        #writer.add_scalar("charts/normalized_episodic_return", np.mean(reward), global_step)
+        writer.add_scalar("charts/episodic_length", info["episode length"], global_step)
 
         # TRY NOT TO MODIFY: save data to reply buffer; handle `terminal_observation`
         real_next_obs = next_obs.copy()
-        for idx, d in enumerate(dones):
-            if d:
-                real_next_obs[idx] = infos[idx]["terminal_observation"]
+        #for idx, d in enumerate(dones):
+        #    if d:
+        #        #real_next_obs[idx] = infos[idx]["terminal_observation"]
+        #        real_next_obs = infos
         rb.add(obs, real_next_obs, actions, rewards, dones, infos)
 
         # TRY NOT TO MODIFY: CRUCIAL step easy to overlook

@@ -1,0 +1,106 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.13.11
+    code_path: code/QuantumControl/sac.py
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.9.11
+    start_time: 1682509097.779908
+    t:
+      1:
+      - 1
+      - 2
+      - 3
+      - 12
+      - 55
+      2:
+      - 1
+      - 2
+      - 3
+      - 12
+      - 55
+      3:
+      - 13
+      - 16
+      - 23
+      - 35
+      4: 3.9.11
+      5: 0.13.11
+      8:
+      - 5
+alpha:
+  desc: null
+  value: 0.2
+autotune:
+  desc: null
+  value: true
+batch_size:
+  desc: null
+  value: 256
+buffer_size:
+  desc: null
+  value: 100000
+capture_video:
+  desc: null
+  value: false
+cuda:
+  desc: null
+  value: true
+env_id:
+  desc: null
+  value: quantum_envs/CNOTGateCalibration-v0
+exp_name:
+  desc: null
+  value: sac
+gamma:
+  desc: null
+  value: 0.99
+group_name:
+  desc: null
+  value: complete_tomography_state
+job_type:
+  desc: null
+  value: train
+learning_starts:
+  desc: null
+  value: 5000.0
+noise_clip:
+  desc: null
+  value: 0.5
+policy_frequency:
+  desc: null
+  value: 2
+policy_lr:
+  desc: null
+  value: 0.018
+q_lr:
+  desc: null
+  value: 0.001
+seed:
+  desc: null
+  value: 1
+target_network_frequency:
+  desc: null
+  value: 1
+tau:
+  desc: null
+  value: 0.005
+torch_deterministic:
+  desc: null
+  value: true
+total_timesteps:
+  desc: null
+  value: 100000
+track:
+  desc: null
+  value: true
+wandb_entity:
+  desc: null
+  value: quantumcontrolwithrl
+wandb_project_name:
+  desc: null
+  value: GateCalibration

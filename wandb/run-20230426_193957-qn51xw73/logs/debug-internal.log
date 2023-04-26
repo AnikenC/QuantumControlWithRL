@@ -1,0 +1,217 @@
+2023-04-26 19:39:57,809 INFO    StreamThr :11364 [internal.py:wandb_internal():87] W&B internal server running at pid: 11364, started at: 2023-04-26 19:39:57.808205
+2023-04-26 19:39:57,810 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: status
+2023-04-26 19:39:57,831 INFO    WriterThread:11364 [datastore.py:open_for_write():85] open: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/run-qn51xw73.wandb
+2023-04-26 19:39:57,831 DEBUG   SenderThread:11364 [sender.py:send():336] send: header
+2023-04-26 19:39:57,875 DEBUG   SenderThread:11364 [sender.py:send():336] send: run
+2023-04-26 19:39:58,545 INFO    SenderThread:11364 [dir_watcher.py:__init__():219] watching files in: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files
+2023-04-26 19:39:58,545 INFO    SenderThread:11364 [sender.py:_start_run_threads():1078] run started: qn51xw73 with start time 1682509197.813442
+2023-04-26 19:39:58,545 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: summary_record
+2023-04-26 19:39:58,546 INFO    SenderThread:11364 [sender.py:_save_file():1332] saving file wandb-summary.json with policy end
+2023-04-26 19:39:58,546 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: check_version
+2023-04-26 19:39:58,547 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: check_version
+2023-04-26 19:39:58,607 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: run_start
+2023-04-26 19:39:58,627 DEBUG   HandlerThread:11364 [system_info.py:__init__():31] System info init
+2023-04-26 19:39:58,628 DEBUG   HandlerThread:11364 [system_info.py:__init__():46] System info init done
+2023-04-26 19:39:58,628 INFO    HandlerThread:11364 [system_monitor.py:start():183] Starting system monitor
+2023-04-26 19:39:58,628 INFO    SystemMonitor:11364 [system_monitor.py:_start():147] Starting system asset monitoring threads
+2023-04-26 19:39:58,629 INFO    HandlerThread:11364 [system_monitor.py:probe():204] Collecting system info
+2023-04-26 19:39:58,630 DEBUG   HandlerThread:11364 [system_info.py:probe():195] Probing system
+2023-04-26 19:39:58,631 INFO    SystemMonitor:11364 [interfaces.py:start():187] Started cpu monitoring
+2023-04-26 19:39:58,631 INFO    SystemMonitor:11364 [interfaces.py:start():187] Started disk monitoring
+2023-04-26 19:39:58,632 INFO    SystemMonitor:11364 [interfaces.py:start():187] Started memory monitoring
+2023-04-26 19:39:58,633 INFO    SystemMonitor:11364 [interfaces.py:start():187] Started network monitoring
+2023-04-26 19:39:58,635 DEBUG   HandlerThread:11364 [system_info.py:_probe_git():180] Probing git
+2023-04-26 19:39:58,674 DEBUG   HandlerThread:11364 [system_info.py:_probe_git():188] Probing git done
+2023-04-26 19:39:58,678 DEBUG   HandlerThread:11364 [system_info.py:probe():240] Probing system done
+2023-04-26 19:39:58,678 DEBUG   HandlerThread:11364 [system_monitor.py:probe():213] {'os': 'macOS-10.16-x86_64-i386-64bit', 'python': '3.9.11', 'heartbeatAt': '2023-04-26T11:39:58.631147', 'startedAt': '2023-04-26T11:39:57.784568', 'docker': None, 'cuda': None, 'args': ('--track',), 'state': 'running', 'program': '/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/sac.py', 'codePath': 'QuantumControl/sac.py', 'git': {'remote': 'https://github.com/AnikenC/QuantumControlWithRL', 'commit': '9a1e860eca031d9db1f6347626aae84af1ac33de'}, 'email': 'quantac47@gmail.com', 'root': '/Users/chatt07/Desktop/proper_env/QuantumControlWithRL', 'host': 'Aniken', 'username': 'chatt07', 'executable': '/Users/chatt07/Desktop/proper_env/bin/python3', 'cpu_count': 4, 'cpu_count_logical': 8, 'cpu_freq': {'current': 1400, 'min': 1400, 'max': 1400}, 'cpu_freq_per_core': [{'current': 1400, 'min': 1400, 'max': 1400}], 'disk': {'total': 233.46913528442383, 'used': 8.451896667480469}, 'memory': {'total': 8.0}}
+2023-04-26 19:39:58,679 INFO    HandlerThread:11364 [system_monitor.py:probe():214] Finished collecting system info
+2023-04-26 19:39:58,679 INFO    HandlerThread:11364 [system_monitor.py:probe():217] Publishing system info
+2023-04-26 19:39:58,679 DEBUG   HandlerThread:11364 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-04-26 19:39:58,700 DEBUG   HandlerThread:11364 [system_info.py:_save_pip():67] Saving pip packages done
+2023-04-26 19:39:58,720 DEBUG   HandlerThread:11364 [system_info.py:_save_code():89] Saving code
+2023-04-26 19:39:58,742 DEBUG   HandlerThread:11364 [system_info.py:_save_code():110] Saving code done
+2023-04-26 19:39:58,742 DEBUG   HandlerThread:11364 [system_info.py:_save_patches():127] Saving git patches
+2023-04-26 19:39:58,950 DEBUG   HandlerThread:11364 [system_info.py:_save_patches():169] Saving git patches done
+2023-04-26 19:39:58,952 INFO    HandlerThread:11364 [system_monitor.py:probe():219] Finished publishing system info
+2023-04-26 19:39:58,967 DEBUG   SenderThread:11364 [sender.py:send():336] send: files
+2023-04-26 19:39:58,968 INFO    SenderThread:11364 [sender.py:_save_file():1332] saving file wandb-metadata.json with policy now
+2023-04-26 19:39:58,968 INFO    SenderThread:11364 [sender.py:_save_file():1332] saving file code/QuantumControl/sac.py with policy now
+2023-04-26 19:39:58,969 INFO    SenderThread:11364 [sender.py:_save_file():1332] saving file diff.patch with policy now
+2023-04-26 19:39:58,984 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: stop_status
+2023-04-26 19:39:58,984 DEBUG   SenderThread:11364 [sender.py:send():336] send: telemetry
+2023-04-26 19:39:58,986 INFO    HandlerThread:11364 [handler.py:handle_tbrecord():747] handling tbrecord: tbrecord {
+  log_dir: "runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682509194"
+  save: true
+}
+control {
+  relay_id: "cda1d903de21450fb085abb092b47bbf"
+}
+_info {
+  stream_id: "qn51xw73"
+}
+
+2023-04-26 19:39:58,989 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: stop_status
+2023-04-26 19:39:58,992 DEBUG   HandlerThread:11364 [config_util.py:dict_from_config_file():103] no default config file found in config-defaults.yaml
+2023-04-26 19:40:07,169 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: keepalive
+2023-04-26 19:40:07,191 DEBUG   SenderThread:11364 [sender.py:send():336] send: tbrecord
+2023-04-26 19:40:07,191 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: status_report
+2023-04-26 19:40:07,212 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/code/QuantumControl/sac.py
+2023-04-26 19:40:07,217 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/requirements.txt
+2023-04-26 19:40:07,218 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/output.log
+2023-04-26 19:40:07,220 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/wandb-metadata.json
+2023-04-26 19:40:07,220 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/wandb-summary.json
+2023-04-26 19:40:07,220 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/diff.patch
+2023-04-26 19:40:07,221 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/code/QuantumControl
+2023-04-26 19:40:07,221 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/code
+2023-04-26 19:40:07,674 INFO    wandb-upload_0:11364 [upload_job.py:push():138] Uploaded file /var/folders/g4/_yhz0jm50s17zz2ms7wwytcr0000gr/T/tmpcm8ldh2owandb/cymvmr7f-wandb-metadata.json
+2023-04-26 19:40:07,786 INFO    wandb-upload_2:11364 [upload_job.py:push():138] Uploaded file /var/folders/g4/_yhz0jm50s17zz2ms7wwytcr0000gr/T/tmpcm8ldh2owandb/wsaia6lp-diff.patch
+2023-04-26 19:40:07,860 INFO    wandb-upload_1:11364 [upload_job.py:push():138] Uploaded file /var/folders/g4/_yhz0jm50s17zz2ms7wwytcr0000gr/T/tmpcm8ldh2owandb/webxul2l-code/QuantumControl/sac.py
+2023-04-26 19:40:09,212 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/output.log
+2023-04-26 19:40:12,212 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: status_report
+2023-04-26 19:40:13,004 DEBUG   SenderThread:11364 [sender.py:send():336] send: files
+2023-04-26 19:40:13,004 INFO    SenderThread:11364 [sender.py:_save_file():1332] saving file events.out.tfevents.1682509198.Aniken.11348.0 with policy live
+2023-04-26 19:40:13,225 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_created():278] file/dir created: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/events.out.tfevents.1682509198.Aniken.11348.0
+2023-04-26 19:40:13,968 INFO    wandb-upload_0:11364 [upload_job.py:push():138] Uploaded file /var/folders/g4/_yhz0jm50s17zz2ms7wwytcr0000gr/T/tmpcm8ldh2owandb/i2idhy83-events.out.tfevents.1682509198.Aniken.11348.0
+2023-04-26 19:40:13,981 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: keepalive
+2023-04-26 19:40:13,982 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: keepalive
+2023-04-26 19:40:17,300 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: status_report
+2023-04-26 19:40:17,406 DEBUG   SenderThread:11364 [sender.py:send():336] send: exit
+2023-04-26 19:40:17,406 INFO    SenderThread:11364 [sender.py:send_exit():559] handling exit code: 1
+2023-04-26 19:40:17,406 INFO    SenderThread:11364 [sender.py:send_exit():561] handling runtime: 18
+2023-04-26 19:40:17,407 INFO    SenderThread:11364 [sender.py:_save_file():1332] saving file wandb-summary.json with policy end
+2023-04-26 19:40:17,407 INFO    SenderThread:11364 [sender.py:send_exit():567] send defer
+2023-04-26 19:40:17,408 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:17,408 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 0
+2023-04-26 19:40:17,409 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:17,409 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 0
+2023-04-26 19:40:17,409 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 1
+2023-04-26 19:40:17,410 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:17,410 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 1
+2023-04-26 19:40:17,410 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:17,410 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 1
+2023-04-26 19:40:17,411 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 2
+2023-04-26 19:40:17,411 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:17,411 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 2
+2023-04-26 19:40:17,411 INFO    HandlerThread:11364 [system_monitor.py:finish():193] Stopping system monitor
+2023-04-26 19:40:17,428 DEBUG   SystemMonitor:11364 [system_monitor.py:_start():161] Starting system metrics aggregation loop
+2023-04-26 19:40:17,429 DEBUG   SystemMonitor:11364 [system_monitor.py:_start():168] Finished system metrics aggregation loop
+2023-04-26 19:40:17,429 DEBUG   SystemMonitor:11364 [system_monitor.py:_start():172] Publishing last batch of metrics
+2023-04-26 19:40:17,432 INFO    HandlerThread:11364 [interfaces.py:finish():199] Joined cpu monitor
+2023-04-26 19:40:17,433 INFO    HandlerThread:11364 [interfaces.py:finish():199] Joined disk monitor
+2023-04-26 19:40:17,433 INFO    HandlerThread:11364 [interfaces.py:finish():199] Joined memory monitor
+2023-04-26 19:40:17,433 INFO    HandlerThread:11364 [interfaces.py:finish():199] Joined network monitor
+2023-04-26 19:40:17,434 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:17,434 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 2
+2023-04-26 19:40:17,434 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 3
+2023-04-26 19:40:17,434 DEBUG   SenderThread:11364 [sender.py:send():336] send: stats
+2023-04-26 19:40:17,435 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:17,435 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 3
+2023-04-26 19:40:17,435 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:17,435 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 3
+2023-04-26 19:40:17,435 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 4
+2023-04-26 19:40:17,436 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:17,436 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 4
+2023-04-26 19:40:18,248 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/wandb-summary.json
+2023-04-26 19:40:19,255 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/output.log
+2023-04-26 19:40:23,208 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: poll_exit
+2023-04-26 19:40:23,209 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: status_report
+2023-04-26 19:40:23,210 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:23,210 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 4
+2023-04-26 19:40:23,211 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 5
+2023-04-26 19:40:23,211 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: poll_exit
+2023-04-26 19:40:23,211 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:23,212 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 5
+2023-04-26 19:40:23,213 DEBUG   SenderThread:11364 [sender.py:send():336] send: summary
+2023-04-26 19:40:23,214 INFO    SenderThread:11364 [sender.py:_save_file():1332] saving file wandb-summary.json with policy end
+2023-04-26 19:40:23,214 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:23,214 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 5
+2023-04-26 19:40:23,214 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 6
+2023-04-26 19:40:23,215 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:23,215 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 6
+2023-04-26 19:40:23,215 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:23,215 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 6
+2023-04-26 19:40:23,222 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: status_report
+2023-04-26 19:40:23,271 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/wandb-summary.json
+2023-04-26 19:40:23,427 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: keepalive
+2023-04-26 19:40:23,574 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 7
+2023-04-26 19:40:23,574 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:23,574 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 7
+2023-04-26 19:40:23,574 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:23,574 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 7
+2023-04-26 19:40:24,274 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/config.yaml
+2023-04-26 19:40:25,237 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 8
+2023-04-26 19:40:25,237 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:25,238 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 8
+2023-04-26 19:40:25,238 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:25,238 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 8
+2023-04-26 19:40:25,253 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 9
+2023-04-26 19:40:25,254 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:25,254 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 9
+2023-04-26 19:40:25,255 DEBUG   SenderThread:11364 [sender.py:send():336] send: artifact
+2023-04-26 19:40:25,275 INFO    Thread-13 :11364 [dir_watcher.py:_on_file_modified():295] file/dir modified: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/output.log
+2023-04-26 19:40:27,234 INFO    wandb-upload_0:11364 [upload_job.py:push():93] Skipped uploading /Users/chatt07/Library/Application Support/wandb/artifacts/staging/tmpp7ffugv1
+2023-04-26 19:40:27,234 INFO    wandb-upload_2:11364 [upload_job.py:push():93] Skipped uploading /Users/chatt07/Library/Application Support/wandb/artifacts/staging/tmpvyegk2wi
+2023-04-26 19:40:28,376 INFO    wandb-upload_1:11364 [upload_job.py:push():96] Uploaded file /Users/chatt07/Library/Application Support/wandb/artifacts/staging/tmpw7j4nav6
+2023-04-26 19:40:28,447 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: keepalive
+2023-04-26 19:40:30,489 INFO    SenderThread:11364 [sender.py:send_artifact():1428] sent artifact job-https___github.com_AnikenC_QuantumControlWithRL_QuantumControl_sac.py - {'id': 'QXJ0aWZhY3Q6NDMzODc3MTgy', 'digest': '5d827f1a9c186739f7415b0958d37fa2', 'state': 'PENDING', 'aliases': [], 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjY0Njc1NjQz', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NDMzODc2MDA0', 'versionIndex': 4}}, 'version': 'latest'}
+2023-04-26 19:40:30,490 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:30,490 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 9
+2023-04-26 19:40:30,490 INFO    SenderThread:11364 [dir_watcher.py:finish():365] shutting down directory watcher
+2023-04-26 19:40:30,490 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: status_report
+2023-04-26 19:40:31,296 INFO    SenderThread:11364 [dir_watcher.py:finish():395] scan: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files
+2023-04-26 19:40:31,297 INFO    SenderThread:11364 [dir_watcher.py:finish():409] scan save: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/diff.patch diff.patch
+2023-04-26 19:40:31,297 INFO    SenderThread:11364 [dir_watcher.py:finish():409] scan save: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/requirements.txt requirements.txt
+2023-04-26 19:40:31,297 INFO    SenderThread:11364 [dir_watcher.py:finish():409] scan save: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/events.out.tfevents.1682509198.Aniken.11348.0 events.out.tfevents.1682509198.Aniken.11348.0
+2023-04-26 19:40:31,303 INFO    SenderThread:11364 [dir_watcher.py:finish():409] scan save: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/output.log output.log
+2023-04-26 19:40:31,303 INFO    SenderThread:11364 [dir_watcher.py:finish():409] scan save: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/config.yaml config.yaml
+2023-04-26 19:40:31,309 INFO    SenderThread:11364 [dir_watcher.py:finish():409] scan save: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/wandb-summary.json wandb-summary.json
+2023-04-26 19:40:31,310 INFO    SenderThread:11364 [dir_watcher.py:finish():409] scan save: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/wandb-metadata.json wandb-metadata.json
+2023-04-26 19:40:31,319 INFO    SenderThread:11364 [dir_watcher.py:finish():409] scan save: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/code/QuantumControl/sac.py code/QuantumControl/sac.py
+2023-04-26 19:40:31,319 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 10
+2023-04-26 19:40:31,319 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:31,320 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 10
+2023-04-26 19:40:31,321 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:31,321 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 10
+2023-04-26 19:40:31,321 INFO    SenderThread:11364 [file_pusher.py:finish():164] shutting down file pusher
+2023-04-26 19:40:32,012 INFO    wandb-upload_1:11364 [upload_job.py:push():138] Uploaded file /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/output.log
+2023-04-26 19:40:32,023 INFO    wandb-upload_3:11364 [upload_job.py:push():138] Uploaded file /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/wandb-summary.json
+2023-04-26 19:40:32,054 INFO    wandb-upload_2:11364 [upload_job.py:push():138] Uploaded file /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/config.yaml
+2023-04-26 19:40:32,249 INFO    wandb-upload_0:11364 [upload_job.py:push():138] Uploaded file /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/files/requirements.txt
+2023-04-26 19:40:32,454 INFO    Thread-12 :11364 [sender.py:transition_state():587] send defer: 11
+2023-04-26 19:40:32,455 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:32,455 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 11
+2023-04-26 19:40:32,456 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:32,456 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 11
+2023-04-26 19:40:32,456 INFO    SenderThread:11364 [file_pusher.py:join():169] waiting for file pusher
+2023-04-26 19:40:32,457 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 12
+2023-04-26 19:40:32,457 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:32,457 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 12
+2023-04-26 19:40:32,458 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:32,458 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 12
+2023-04-26 19:40:32,842 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 13
+2023-04-26 19:40:32,843 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:32,843 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 13
+2023-04-26 19:40:32,844 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:32,844 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 13
+2023-04-26 19:40:32,844 INFO    SenderThread:11364 [sender.py:transition_state():587] send defer: 14
+2023-04-26 19:40:32,844 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: defer
+2023-04-26 19:40:32,845 INFO    HandlerThread:11364 [handler.py:handle_request_defer():170] handle defer: 14
+2023-04-26 19:40:32,845 DEBUG   SenderThread:11364 [sender.py:send():336] send: final
+2023-04-26 19:40:32,846 DEBUG   SenderThread:11364 [sender.py:send():336] send: footer
+2023-04-26 19:40:32,846 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: defer
+2023-04-26 19:40:32,846 INFO    SenderThread:11364 [sender.py:send_request_defer():583] handle sender defer: 14
+2023-04-26 19:40:32,847 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: poll_exit
+2023-04-26 19:40:32,848 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: poll_exit
+2023-04-26 19:40:32,849 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: server_info
+2023-04-26 19:40:32,850 DEBUG   SenderThread:11364 [sender.py:send_request():363] send_request: server_info
+2023-04-26 19:40:32,853 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: get_summary
+2023-04-26 19:40:32,854 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: sampled_history
+2023-04-26 19:40:33,216 INFO    MainThread:11364 [wandb_run.py:_footer_history_summary_info():3429] rendering history
+2023-04-26 19:40:33,216 INFO    MainThread:11364 [wandb_run.py:_footer_history_summary_info():3461] rendering summary
+2023-04-26 19:40:33,216 INFO    MainThread:11364 [wandb_run.py:_footer_sync_info():3387] logging synced files
+2023-04-26 19:40:33,217 DEBUG   HandlerThread:11364 [handler.py:handle_request():144] handle_request: shutdown
+2023-04-26 19:40:33,217 INFO    HandlerThread:11364 [handler.py:finish():842] shutting down handler
+2023-04-26 19:40:33,853 INFO    WriterThread:11364 [datastore.py:close():298] close: /Users/chatt07/Desktop/proper_env/QuantumControlWithRL/wandb/run-20230426_193957-qn51xw73/run-qn51xw73.wandb
+2023-04-26 19:40:34,219 INFO    SenderThread:11364 [sender.py:finish():1504] shutting down sender
+2023-04-26 19:40:34,220 INFO    SenderThread:11364 [file_pusher.py:finish():164] shutting down file pusher
+2023-04-26 19:40:34,220 INFO    SenderThread:11364 [file_pusher.py:join():169] waiting for file pusher

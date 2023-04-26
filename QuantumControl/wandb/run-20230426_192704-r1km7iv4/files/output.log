@@ -1,0 +1,12 @@
+/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/envs/registration.py:523: DeprecationWarning: [33mWARN: The environment quantum_envs/CNOTGateCalibration-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+Traceback (most recent call last):
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/sac.py", line 213, in <module>
+    rb = ReplayBuffer(
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/stable_baselines3/common/buffers.py", line 182, in __init__
+    super(ReplayBuffer, self).__init__(buffer_size, observation_space, action_space, device, n_envs=n_envs)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/stable_baselines3/common/buffers.py", line 49, in __init__
+    self.obs_shape = get_obs_shape(observation_space)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/stable_baselines3/common/preprocessing.py", line 158, in get_obs_shape
+    raise NotImplementedError(f"{observation_space} observation space is not supported")
+NotImplementedError: Box(-1.0, 1.0, (1,), <class 'numpy.float32'>) observation space is not supported

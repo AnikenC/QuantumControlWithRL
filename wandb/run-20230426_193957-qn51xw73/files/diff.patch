@@ -1,0 +1,404 @@
+diff --git a/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc b/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc
+index b1b8968..88cda7f 100644
+Binary files a/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc and b/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc differ
+diff --git a/QuantumControl/sac.py b/QuantumControl/sac.py
+index c476076..c491d49 100644
+--- a/QuantumControl/sac.py
++++ b/QuantumControl/sac.py
+@@ -5,7 +5,7 @@ import random
+ import time
+ from distutils.util import strtobool
+ 
+-import gym
++import gymnasium as gym
+ import numpy as np
+ #import pybullet_envs  # noqa
+ import torch
+@@ -47,11 +47,11 @@ def parse_args():
+         help="whether to capture videos of the agent performances (check out `videos` folder)")
+ 
+     # Algorithm specific arguments
+-    parser.add_argument("--env-id", type=str, default="HopperBulletEnv-v0",
++    parser.add_argument("--env-id", type=str, default="quantum_envs/CNOTGateCalibration-v0",
+         help="the id of the environment")
+-    parser.add_argument("--total-timesteps", type=int, default=1000000,
++    parser.add_argument("--total-timesteps", type=int, default=100000,
+         help="total timesteps of the experiments")
+-    parser.add_argument("--buffer-size", type=int, default=int(1e6),
++    parser.add_argument("--buffer-size", type=int, default=int(1e5),
+         help="the replay memory buffer size")
+     parser.add_argument("--gamma", type=float, default=0.99,
+         help="the discount factor gamma")
+@@ -61,7 +61,7 @@ def parse_args():
+         help="the batch size of sample from the reply memory")
+     parser.add_argument("--learning-starts", type=int, default=5e3,
+         help="timestep to start learning")
+-    parser.add_argument("--policy-lr", type=float, default=3e-4,
++    parser.add_argument("--policy-lr", type=float, default=0.018,
+         help="the learning rate of the policy network optimizer")
+     parser.add_argument("--q-lr", type=float, default=1e-3,
+         help="the learning rate of the Q network network optimizer")
+@@ -87,9 +87,9 @@ def make_env(env_id, seed, idx, capture_video, run_name):
+         if capture_video:
+             if idx == 0:
+                 env = gym.wrappers.RecordVideo(env, f"videos/{run_name}")
+-        env.seed(seed)
+-        env.action_space.seed(seed)
+-        env.observation_space.seed(seed)
++        #env.seed(seed)
++        #env.action_space.seed(seed)
++        #env.observation_space.seed(seed)
+         return env
+ 
+     return thunk
+@@ -167,7 +167,7 @@ if __name__ == "__main__":
+             sync_tensorboard=True,
+             config=vars(args),
+             name=run_name,
+-            monitor_gym=True,
++            #monitor_gym=True,
+             save_code=True,
+         )
+     writer = SummaryWriter(f"runs/{run_name}")
+@@ -220,7 +220,7 @@ if __name__ == "__main__":
+     start_time = time.time()
+ 
+     # TRY NOT TO MODIFY: start the game
+-    obs = envs.reset()
++    obs = envs.reset(seed=args.seed)
+     for global_step in range(args.total_timesteps):
+         # ALGO LOGIC: put action logic here
+         if global_step < args.learning_starts:
+@@ -230,19 +230,18 @@ if __name__ == "__main__":
+             actions = actions.detach().cpu().numpy()
+ 
+         # TRY NOT TO MODIFY: execute the game and log data.
+-        next_obs, rewards, dones, infos = envs.step(actions)
++        next_obs, rewards, dones, _, infos = envs.step(actions)
+ 
+         # TRY NOT TO MODIFY: record rewards for plotting purposes
+-        for info in infos:
+-            if "episode" in info.keys():
+-                temp_return = info["mean reward"]
+-                max_reward_at_step = info["step for max"]
+-                max_reward = info["max reward"]
+-                #print(f"global_step={global_step}, episodic_return={temp_return}, delta={delta}")
+-                #print(f"max reward of {max_reward} at step {max_reward_at_step}")
+-                writer.add_scalar("charts/episodic_return", temp_return, global_step)
+-                #writer.add_scalar("charts/normalized_episodic_return", np.mean(reward), global_step)
+-                writer.add_scalar("charts/episodic_length", info["episode length"], global_step)
++        info = infos
++        temp_return = info["mean reward"]
++        max_reward_at_step = info["step for max"]
++        max_reward = info["max reward"]
++        #print(f"global_step={global_step}, episodic_return={temp_return}, delta={delta}")
++        #print(f"max reward of {max_reward} at step {max_reward_at_step}")
++        writer.add_scalar("charts/episodic_return", temp_return, global_step)
++        #writer.add_scalar("charts/normalized_episodic_return", np.mean(reward), global_step)
++        writer.add_scalar("charts/episodic_length", info["episode length"], global_step)
+ 
+         # TRY NOT TO MODIFY: save data to reply buffer; handle `terminal_observation`
+         real_next_obs = next_obs.copy()
+diff --git a/QuantumControl/wandb/debug-cli.chatt07.log b/QuantumControl/wandb/debug-cli.chatt07.log
+index ed5054b..a3c7b6d 100644
+--- a/QuantumControl/wandb/debug-cli.chatt07.log
++++ b/QuantumControl/wandb/debug-cli.chatt07.log
+@@ -7,3 +7,28 @@
+ 2023-04-26 14:45:34 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__ppo__1__1682491508/events.out.tfevents.1682491513.Aniken.96599.0
+ 2023-04-26 14:45:35 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__ppo__1__1682491508/events.out.tfevents.1682491513.Aniken.96599.0
+ 2023-04-26 14:45:36 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__ppo__1__1682491508/events.out.tfevents.1682491513.Aniken.96599.0
++2023-04-26 19:24:47 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:48 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:49 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:50 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:51 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:51 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:51 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:52 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:53 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:54 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:55 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:56 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:24:57 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508268/events.out.tfevents.1682508273.Aniken.10110.0
++2023-04-26 19:27:20 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:21 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:22 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:24 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:24 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:24 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:25 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:26 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:27 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:28 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:29 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
++2023-04-26 19:27:30 INFO No path found after runs/quantum_envs/CNOTGateCalibration-v0__sac__1__1682508421/events.out.tfevents.1682508426.Aniken.10296.0
+diff --git a/QuantumControl/wandb/debug-internal.log b/QuantumControl/wandb/debug-internal.log
+index 11aaa51..f3948df 120000
+--- a/QuantumControl/wandb/debug-internal.log
++++ b/QuantumControl/wandb/debug-internal.log
+@@ -1 +1 @@
+-run-20230426_144511-2ixsj4py/logs/debug-internal.log
+\ No newline at end of file
++run-20230426_192704-r1km7iv4/logs/debug-internal.log
+\ No newline at end of file
+diff --git a/QuantumControl/wandb/debug.log b/QuantumControl/wandb/debug.log
+index 141be8a..b01265e 120000
+--- a/QuantumControl/wandb/debug.log
++++ b/QuantumControl/wandb/debug.log
+@@ -1 +1 @@
+-run-20230426_144511-2ixsj4py/logs/debug.log
+\ No newline at end of file
++run-20230426_192704-r1km7iv4/logs/debug.log
+\ No newline at end of file
+diff --git a/QuantumControl/wandb/latest-run b/QuantumControl/wandb/latest-run
+index 805b7e7..1c97aa7 120000
+--- a/QuantumControl/wandb/latest-run
++++ b/QuantumControl/wandb/latest-run
+@@ -1 +1 @@
+-run-20230426_144511-2ixsj4py
+\ No newline at end of file
++run-20230426_192704-r1km7iv4
+\ No newline at end of file
+diff --git a/poetry.lock b/poetry.lock
+index 7fc80c8..d5c6f9f 100644
+--- a/poetry.lock
++++ b/poetry.lock
+@@ -12,39 +12,6 @@ files = [
+     {file = "absl_py-1.4.0-py3-none-any.whl", hash = "sha256:0d3fe606adfa4f7db64792dd4c7aee4ee0c38ab75dfd353b7a83ed3e957fcb47"},
+ ]
+ 
+-[[package]]
+-name = "ale-py"
+-version = "0.7.4"
+-description = "The Arcade Learning Environment (ALE) - a platform for AI research."
+-category = "main"
+-optional = false
+-python-versions = ">=3.7"
+-files = [
+-    {file = "ale_py-0.7.4-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:418eea1539c2669c799274fedead4d44d05dfc3dcd6c536378d5984c42bc340b"},
+-    {file = "ale_py-0.7.4-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:38e4823be04761a2ebc0167ed710a318cc9f0fec3815576c45030fe8e67f9c98"},
+-    {file = "ale_py-0.7.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9af49488ec1b4facb299975a665e9e706921dd2d756daad813e2897debc5fc3c"},
+-    {file = "ale_py-0.7.4-cp310-cp310-win_amd64.whl", hash = "sha256:f600c55d6a7c6c30f5592b30afc34366101fc7561842bdd5740d5bca390201eb"},
+-    {file = "ale_py-0.7.4-cp37-cp37m-macosx_10_15_x86_64.whl", hash = "sha256:da3e1400e02fb46659dfb3af92e8a4cf4c5b2d4f9d19a008ce9d5fa8eebb4ab6"},
+-    {file = "ale_py-0.7.4-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c073005b68901f0003ffe871d56021245eda9e88f27cc91745627c099932499f"},
+-    {file = "ale_py-0.7.4-cp37-cp37m-win_amd64.whl", hash = "sha256:913394ad1dbe22a8d489378d702f296234721ca0a0e76e5354764e8bf40bc623"},
+-    {file = "ale_py-0.7.4-cp38-cp38-macosx_10_15_x86_64.whl", hash = "sha256:4841f395e3166d4a7b1e9207cafab08de4b9e9b4178afd97a36f53844ade98a2"},
+-    {file = "ale_py-0.7.4-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:5b2899b4cf659bc14a20047455e681e991cb96ceed937d22a5dac1a97a16bf3e"},
+-    {file = "ale_py-0.7.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9aff7a8ce37d00a87ef4114666db0b45d499744d08f5ff1683dbbbcac4783569"},
+-    {file = "ale_py-0.7.4-cp38-cp38-win_amd64.whl", hash = "sha256:a23f4c858a2c5cbfa3c0cb2c9ab167359c368104b67e19b332710c19b43c6091"},
+-    {file = "ale_py-0.7.4-cp39-cp39-macosx_10_15_x86_64.whl", hash = "sha256:0b9ab62f12a325e92ba2af99c5b231ad3b219a46913b14068c857d37837025fb"},
+-    {file = "ale_py-0.7.4-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:269dcf94024ba7a8276d4dcf04c526df695cb383aa2372e9903a08ec6f679262"},
+-    {file = "ale_py-0.7.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3f65371c180779b115d8600d99780e9e83b229812e94c6b49be1686ce4d82573"},
+-    {file = "ale_py-0.7.4-cp39-cp39-win_amd64.whl", hash = "sha256:b53e7d0c8f8e8610ebaec88887da2427ce16811f9697ccbb39588ec784bea145"},
+-]
+-
+-[package.dependencies]
+-importlib-metadata = {version = ">=4.10.0", markers = "python_version < \"3.10\""}
+-importlib-resources = "*"
+-numpy = "*"
+-
+-[package.extras]
+-test = ["gym", "pytest"]
+-
+ [[package]]
+ name = "alembic"
+ version = "1.10.4"
+@@ -93,44 +60,6 @@ files = [
+     {file = "async_timeout-4.0.2-py3-none-any.whl", hash = "sha256:8ca1e4fcf50d07413d66d1a5e416e42cfdf5851c981d679a09851a6853383b3c"},
+ ]
+ 
+-[[package]]
+-name = "autorom"
+-version = "0.6.1"
+-description = "Automated installation of Atari ROMs for Gym/ALE-Py"
+-category = "main"
+-optional = false
+-python-versions = ">=3.7"
+-files = [
+-    {file = "AutoROM-0.6.1-py3-none-any.whl", hash = "sha256:e734fdad23dc8e48897de013803eba3c9e109e028d5463a4817346f7f669604f"},
+-    {file = "AutoROM-0.6.1.tar.gz", hash = "sha256:6eff1f1b96a9d519577437f71d96a8d3b896238eca3433a8e69c5c92f6de3231"},
+-]
+-
+-[package.dependencies]
+-"AutoROM.accept-rom-license" = {version = "*", optional = true, markers = "extra == \"accept-rom-license\""}
+-click = "*"
+-requests = "*"
+-
+-[package.extras]
+-accept-rom-license = ["AutoROM.accept-rom-license"]
+-
+-[[package]]
+-name = "autorom-accept-rom-license"
+-version = "0.6.1"
+-description = "Automated installation of Atari ROMs for Gym/ALE-Py"
+-category = "main"
+-optional = false
+-python-versions = ">=3.7"
+-files = [
+-    {file = "AutoROM.accept-rom-license-0.6.1.tar.gz", hash = "sha256:0c905a708d634a076f686802f672817d3585259ce3be0bde8713a4fb59e3159e"},
+-]
+-
+-[package.dependencies]
+-click = "*"
+-requests = "*"
+-
+-[package.extras]
+-tests = ["ale_py", "multi_agent_ale_py"]
+-
+ [[package]]
+ name = "cached-property"
+ version = "1.5.2"
+@@ -1008,33 +937,6 @@ files = [
+ [package.extras]
+ protobuf = ["grpcio-tools (>=1.54.0)"]
+ 
+-[[package]]
+-name = "gym"
+-version = "0.21.0"
+-description = "Gym: A universal API for reinforcement learning environments."
+-category = "main"
+-optional = false
+-python-versions = ">=3.6"
+-files = [
+-    {file = "gym-0.21.0.tar.gz", hash = "sha256:0fd1ce165c754b4017e37a617b097c032b8c3feb8a0394ccc8777c7c50dddff3"},
+-]
+-
+-[package.dependencies]
+-cloudpickle = ">=1.2.0"
+-numpy = ">=1.18.0"
+-
+-[package.extras]
+-accept-rom-license = ["autorom[accept-rom-license] (>=0.4.2,<0.5.0)"]
+-all = ["ale-py (>=0.7.1,<0.8.0)", "ale-py (>=0.7.1,<0.8.0)", "box2d-py (==2.3.5)", "box2d-py (==2.3.5)", "lz4 (>=3.1.0)", "lz4 (>=3.1.0)", "mujoco_py (>=1.50,<2.0)", "mujoco_py (>=1.50,<2.0)", "pyglet (>=1.4.0)", "pyglet (>=1.4.0)", "pyglet (>=1.4.0)", "pyglet (>=1.4.0)", "scipy (>=1.4.1)", "scipy (>=1.4.1)"]
+-atari = ["ale-py (>=0.7.1,<0.8.0)"]
+-box2d = ["box2d-py (==2.3.5)", "pyglet (>=1.4.0)"]
+-classic-control = ["pyglet (>=1.4.0)"]
+-mujoco = ["mujoco_py (>=1.50,<2.0)"]
+-nomujoco = ["ale-py (>=0.7.1,<0.8.0)", "box2d-py (==2.3.5)", "lz4 (>=3.1.0)", "pyglet (>=1.4.0)", "pyglet (>=1.4.0)", "scipy (>=1.4.1)"]
+-other = ["lz4 (>=3.1.0)"]
+-robotics = ["mujoco_py (>=1.50,<2.0)"]
+-toy-text = ["scipy (>=1.4.1)"]
+-
+ [[package]]
+ name = "gymnasium"
+ version = "0.28.1"
+@@ -2037,31 +1939,6 @@ rsa = ["cryptography (>=3.0.0)"]
+ signals = ["blinker (>=1.4.0)"]
+ signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
+ 
+-[[package]]
+-name = "opencv-python"
+-version = "4.7.0.72"
+-description = "Wrapper package for OpenCV python bindings."
+-category = "main"
+-optional = false
+-python-versions = ">=3.6"
+-files = [
+-    {file = "opencv-python-4.7.0.72.tar.gz", hash = "sha256:3424794a711f33284581f3c1e4b071cfc827d02b99d6fd9a35391f517c453306"},
+-    {file = "opencv_python-4.7.0.72-cp37-abi3-macosx_10_16_x86_64.whl", hash = "sha256:d4f8880440c433a0025d78804dda6901d1e8e541a561dda66892d90290aef881"},
+-    {file = "opencv_python-4.7.0.72-cp37-abi3-macosx_11_0_arm64.whl", hash = "sha256:7a297e7651e22eb17c265ddbbc80e2ba2a8ff4f4a1696a67c45e5f5798245842"},
+-    {file = "opencv_python-4.7.0.72-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cd08343654c6b88c5a8c25bf425f8025aed2e3189b4d7306b5861d32affaf737"},
+-    {file = "opencv_python-4.7.0.72-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ebfc0a3a2f57716e709028b992e4de7fd8752105d7a768531c4f434043c6f9ff"},
+-    {file = "opencv_python-4.7.0.72-cp37-abi3-win32.whl", hash = "sha256:eda115797b114fc16ca6f182b91c5d984f0015c19bec3145e55d33d708e9bae1"},
+-    {file = "opencv_python-4.7.0.72-cp37-abi3-win_amd64.whl", hash = "sha256:812af57553ec1c6709060c63f6b7e9ad07ddc0f592f3ccc6d00c71e0fe0e6376"},
+-]
+-
+-[package.dependencies]
+-numpy = [
+-    {version = ">=1.21.0", markers = "python_version <= \"3.9\" and platform_system == \"Darwin\" and platform_machine == \"arm64\""},
+-    {version = ">=1.19.3", markers = "python_version >= \"3.6\" and platform_system == \"Linux\" and platform_machine == \"aarch64\" or python_version >= \"3.9\""},
+-    {version = ">=1.17.0", markers = "python_version >= \"3.7\""},
+-    {version = ">=1.17.3", markers = "python_version >= \"3.8\""},
+-]
+-
+ [[package]]
+ name = "opt-einsum"
+ version = "3.3.0"
+@@ -2946,6 +2823,21 @@ all = ["matplotlib (>=3.0)", "pillow (>=5.4)"]
+ graphviz = ["pillow (>=5.4)"]
+ mpl = ["matplotlib (>=3.0)"]
+ 
++[[package]]
++name = "sb3-contrib"
++version = "2.0.0a4"
++description = "Contrib package of Stable Baselines3, experimental code."
++category = "main"
++optional = false
++python-versions = ">=3.7"
++files = [
++    {file = "sb3_contrib-2.0.0a4-py3-none-any.whl", hash = "sha256:754f642b05ce3ecb875f8e5b0c40027b86f7129b0db66d2f717ef8dc6e83b051"},
++    {file = "sb3_contrib-2.0.0a4.tar.gz", hash = "sha256:46b1eada1d2df9286deb0119d09fbe7a9713d88634a04c170ed6cf57a69052aa"},
++]
++
++[package.dependencies]
++stable-baselines3 = ">=2.0.0a4"
++
+ [[package]]
+ name = "scipy"
+ version = "1.10.1"
+@@ -3094,38 +2986,29 @@ sqlcipher = ["sqlcipher3-binary"]
+ 
+ [[package]]
+ name = "stable-baselines3"
+-version = "1.8.0"
++version = "2.0.0a5"
+ description = "Pytorch version of Stable Baselines, implementations of reinforcement learning algorithms."
+ category = "main"
+ optional = false
+ python-versions = ">=3.7"
+ files = [
+-    {file = "stable_baselines3-1.8.0-py3-none-any.whl", hash = "sha256:1614378c14ecbed0f3906d41dd89e61271e5f2059a93d1f73e468dc07e87c00f"},
+-    {file = "stable_baselines3-1.8.0.tar.gz", hash = "sha256:d30241afdfd092ffd85b64b3308670c72fc4834419dd668faf50096fcd5ce6ae"},
++    {file = "stable_baselines3-2.0.0a5-py3-none-any.whl", hash = "sha256:836ccc54fdba87f36f9472b1da1df96e68b9e534dc51c12d91688e6d703f0a8b"},
++    {file = "stable_baselines3-2.0.0a5.tar.gz", hash = "sha256:feb86940ec2c11b238200db3eb16757ae26c882696f84c91fb1bdf8536efb661"},
+ ]
+ 
+ [package.dependencies]
+-ale-py = {version = "0.7.4", optional = true, markers = "extra == \"extra\""}
+-autorom = {version = ">=0.6.0,<0.7.0", extras = ["accept-rom-license"], optional = true, markers = "extra == \"extra\""}
+ cloudpickle = "*"
+-gym = "0.21"
+-importlib-metadata = ">=4.13,<5.0"
++gymnasium = "0.28.1"
+ matplotlib = "*"
+ numpy = "*"
+-opencv-python = {version = "*", optional = true, markers = "extra == \"extra\""}
+ pandas = "*"
+-pillow = {version = "*", optional = true, markers = "extra == \"extra\""}
+-psutil = {version = "*", optional = true, markers = "extra == \"extra\""}
+-rich = {version = "*", optional = true, markers = "extra == \"extra\""}
+-tensorboard = {version = ">=2.9.1", optional = true, markers = "extra == \"extra\""}
+ torch = ">=1.11"
+-tqdm = {version = "*", optional = true, markers = "extra == \"extra\""}
+ 
+ [package.extras]
+ docs = ["sphinx", "sphinx-autobuild", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-rtd-theme", "sphinxcontrib.spelling"]
+-extra = ["ale-py (==0.7.4)", "autorom[accept-rom-license] (>=0.6.0,<0.7.0)", "opencv-python", "pillow", "psutil", "rich", "tensorboard (>=2.9.1)", "tqdm"]
+-extra-no-roms = ["ale-py (==0.7.4)", "opencv-python", "pillow", "psutil", "rich", "tensorboard (>=2.9.1)", "tqdm"]
+-tests = ["black", "isort (>=5.0)", "mypy", "pytest", "pytest-cov", "pytest-env", "pytest-xdist", "pytype", "ruff", "scipy (>=1.4.1)"]
++extra = ["autorom[accept-rom-license] (>=0.6.0,<0.7.0)", "opencv-python", "pillow", "psutil", "pygame", "pygame (>=2.0,<2.1.3)", "rich", "shimmy[atari] (>=0.2.1,<0.3.0)", "tensorboard (>=2.9.1)", "tqdm"]
++extra-no-roms = ["opencv-python", "pillow", "psutil", "pygame", "pygame (>=2.0,<2.1.3)", "rich", "shimmy[atari] (>=0.2.1,<0.3.0)", "tensorboard (>=2.9.1)", "tqdm"]
++tests = ["black", "isort (>=5.0)", "mypy", "pytest", "pytest-cov", "pytest-env", "pytest-xdist", "pytype", "ruff"]
+ 
+ [[package]]
+ name = "stevedore"
+@@ -3807,4 +3690,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
+ [metadata]
+ lock-version = "2.0"
+ python-versions = "~3.9"
+-content-hash = "d20ece33813e58a2d67e51f7797874de38a50a3f694ba03b48e8cd72e594a693"
++content-hash = "77d6944fc884b4b39bcf55ae62ddd656c35cf147b2900a9ef4a69d04481b14ac"
+diff --git a/pyproject.toml b/pyproject.toml
+index 6219f91..81025e9 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -20,6 +20,9 @@ gymnasium = "^0.28.1"
+ torch = "^2.0.0"
+ jax = "^0.4.8"
+ flax = "^0.6.9"
++sb3-contrib = ">=2.0.0a1"
++stable-baselines3 = ">=2.0.0a1"
++click = "^8.1.3"
+ 
+ 
+ [build-system]

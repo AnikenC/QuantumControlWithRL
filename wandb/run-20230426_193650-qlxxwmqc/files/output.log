@@ -1,0 +1,14 @@
+/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/envs/registration.py:523: DeprecationWarning: [33mWARN: The environment quantum_envs/CNOTGateCalibration-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/utils/passive_env_checker.py:164: UserWarning: [33mWARN: The obs returned by the `reset()` method was expecting numpy array dtype to be <class 'numpy.float32'>, actual type: float64
+  logger.warn(
+/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/utils/passive_env_checker.py:188: UserWarning: [33mWARN: The obs returned by the `reset()` method is not within the observation space.
+  logger.warn(f"{pre} is not within the observation space.")
+/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/utils/passive_env_checker.py:164: UserWarning: [33mWARN: The obs returned by the `step()` method was expecting numpy array dtype to be <class 'numpy.float32'>, actual type: float64
+  logger.warn(
+/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/utils/passive_env_checker.py:188: UserWarning: [33mWARN: The obs returned by the `step()` method is not within the observation space.
+  logger.warn(f"{pre} is not within the observation space.")
+Traceback (most recent call last):
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/sac.py", line 237, in <module>
+    if "episode" in info.keys():
+AttributeError: 'str' object has no attribute 'keys'

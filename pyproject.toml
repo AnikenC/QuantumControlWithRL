@@ -20,6 +20,9 @@ gymnasium = "^0.28.1"
 torch = "^2.0.0"
 jax = "^0.4.8"
 flax = "^0.6.9"
+sb3-contrib = ">=2.0.0a1"
+stable-baselines3 = ">=2.0.0a1"
+click = "^8.1.3"
 
 
 [build-system]
