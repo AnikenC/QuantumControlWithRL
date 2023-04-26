@@ -3,7 +3,7 @@ import time
 import optuna
 print(f"optuna version: {optuna.__version__}")
 
-from cleanrl_utils.tuner import Tuner
+from tuner import Tuner
 
 import quantum_envs
 
