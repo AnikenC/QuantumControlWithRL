@@ -10,7 +10,8 @@ import matplotlib.pyplot as plt
 
 env = gym.make("quantum_envs/CNOTGateCalibration-v0")
 obs, info = env.reset()
-action = np.array([0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], dtype=np.float64)
+action = np.array([ 0.00285997 , 0.34421486, -0.61353683, -0.25360537, -0.26386875,  0.25230902, 0.2414299], dtype=np.float64)
+action = np.array([0])
 simple_action = 2*action
 
 sample_size = 1000
