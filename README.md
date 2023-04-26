@@ -16,9 +16,10 @@ The general structure for this repository is that RL algos can be taken from the
 To access and make your own quantum environments, you need to make a Gymnasium compatible environment, and follow [Gymnasium Registration protocol for making a custom environment](https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/#make-your-own-custom-environment). The broad structure for creating a new environment is to put all relevant files for the environment in a folder in QuantumControl->quantum_envs->envs. Then update the  `__init__.py` file in QuantumControl->quantum_envs->envs by importing the new Gymnasium Environment Class created. Then register this new environment in the `__init__.py` file in QuantumControl->quantum_envs with the necessary registration details.
 
 ---
-## Features to Develop
-1. Add hyperparameter optimization with the tuner file from CleanRL
-2. Achieve standard ppo level learning for the batched_ppo version
-3. Achieve convergent learning for a tomographically complete set with any RL algorithm
-4. Test out alternate promising RL algos such as RPO, TD3, DDPG, and SAC. If TD3 and DDPG show promising results, use their Jax versions as well
-5. Benchmark learning performance with StableBaselines3
+## To-Dos
+1. Verify All Environments have Optimized Solutions, Simulate the Optimal Actions using the `taster.py` file
+2. Make Environments OOP-ed by making Gate Calibration Classes, and then using them to create several relevant Gate Calibration Environments for Command-Line Level Customization
+3. Adding State Preparation Environment, Single-Qubit X-Gate Calibration Environment, and Pulse-Level Two-Qubit Gate Calibration with Jittable Qiskit-Dynamics
+4. Make the TD3, SAC, and TD3-Jax Algorithms Gymnasium-Friendly
+5. Perform Hyperparameter Optimization with the `hyperparam_tuning.py` files for PPO, Batched PPO, SAC, TD3, RPO, TD3-Jax, and benchmark new training performance
+6. Verify that Optuna supports Optimization while using GPUs, to speed up hyperameter tuning
