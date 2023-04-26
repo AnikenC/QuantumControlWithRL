@@ -12,6 +12,8 @@ from gymnasium.vector.utils import concatenate, create_empty_array, iterate
 from gymnasium.vector.utils.spaces import batch_space
 from gymnasium.vector.vector_env import VectorEnv
 
+### Custom Gymnasium Classes to support the Batched Execution Environments ###
+
 class BatchedSyncVectorEnv(VectorEnv):
     """Vectorized environment that serially runs multiple environments.
 

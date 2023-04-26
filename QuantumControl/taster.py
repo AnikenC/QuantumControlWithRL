@@ -6,6 +6,8 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
+### For Debugging the Environments and Verifying Results ###
+
 env = gym.make("quantum_envs/CNOTGateCalibration-v0")
 obs, info = env.reset()
 action = np.array([0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], dtype=np.float64)

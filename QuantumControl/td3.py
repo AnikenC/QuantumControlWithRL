@@ -17,6 +17,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 import quantum_envs
 
+### Not yet made gymnasium compatible, small tweaks required ###
 
 def parse_args():
     # fmt: off

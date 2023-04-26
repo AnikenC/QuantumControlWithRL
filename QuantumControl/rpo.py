@@ -15,6 +15,9 @@ from torch.utils.tensorboard import SummaryWriter
 
 import quantum_envs
 
+### Working Properly ###
+### Currently not reaching PPO level results ###
+### Possibly an issue that requires hyperparameter optimization ###
 
 def parse_args():
     # fmt: off

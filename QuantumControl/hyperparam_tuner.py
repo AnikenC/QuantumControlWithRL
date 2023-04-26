@@ -5,6 +5,9 @@ print(f"optuna version: {optuna.__version__}")
 
 from cleanrl_utils.tuner import Tuner
 
+### Make sure you specify the target scores environments carefully ###
+### Check out https://docs.cleanrl.dev/advanced/hyperparameter-tuning/ for more details ###
+
 script = "ppo.py"
 algo_name = script.rstrip(".py")
 env_id = "quantum_envs/QuantumGateCalibration-v0"

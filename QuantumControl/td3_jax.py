@@ -20,6 +20,8 @@ from torch.utils.tensorboard import SummaryWriter
 
 import quantum_envs
 
+### Not yet made gymnasium compatible, small tweaks required ###
+### Needs to be checked whether it is directly compatible with Qiskit Dynamics JAX ###
 
 def parse_args():
     # fmt: off
