@@ -1,0 +1,52 @@
+
+SPS: 0
+SPS: 0
+SPS: 0
+SPS: 0
+SPS: 0
+Traceback (most recent call last):
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/ppo.py", line 220, in <module>
+    next_obs, reward, terminated, truncated, infos = envs.step(action.cpu().numpy())
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/vector/vector_env.py", line 203, in step
+    return self.step_wait()
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/vector/sync_vector_env.py", line 149, in step_wait
+    ) = env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 502, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/normalize.py", line 133, in step
+    obs, rews, terminateds, truncateds, infos = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 469, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/normalize.py", line 76, in step
+    obs, rews, terminateds, truncateds, infos = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 538, in step
+    return self.env.step(self.action(action))
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/record_episode_statistics.py", line 89, in step
+    ) = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/core.py", line 469, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/time_limit.py", line 57, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/order_enforcing.py", line 56, in step
+    return self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/gymnasium/wrappers/env_checker.py", line 49, in step
+    return self.env.step(action)
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v1/environment.py", line 60, in step
+    self.reward, average_fidelity, process_fidelity = self.qenvironment.perform_action_gate_cal(action)
+  File "/Users/chatt07/Desktop/proper_env/QuantumControlWithRL/QuantumControl/quantum_envs/envs/CNOTGateCalibration_v1/quantum_environment.py", line 230, in perform_action_gate_cal
+    job = estimator.run(
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/qiskit/primitives/base/base_estimator.py", line 235, in run
+    return self._run(
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/qiskit/primitives/estimator.py", line 186, in _run
+    job.submit()
+  File "/Users/chatt07/Desktop/proper_env/lib/python3.9/site-packages/qiskit/primitives/primitive_job.py", line 44, in submit
+    future = executor.submit(self._function, *self._args, **self._kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/concurrent/futures/_base.py", line 637, in __exit__
+    self.shutdown(wait=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/concurrent/futures/thread.py", line 235, in shutdown
+    t.join()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/threading.py", line 1053, in join
+    self._wait_for_tstate_lock()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/threading.py", line 1073, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+KeyboardInterrupt

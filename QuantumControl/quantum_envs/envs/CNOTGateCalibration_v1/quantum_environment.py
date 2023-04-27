@@ -154,7 +154,7 @@ class QuantumEnvironment:
         obtained density matrix
         """ 
 
-        repeat_size = 300
+        repeat_size = 100
 
         if actions.ndim == 1:
             actions = np.expand_dims(actions, 0)

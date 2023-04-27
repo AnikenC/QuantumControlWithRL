@@ -1,0 +1,27 @@
+diff --git a/QuantumControl/wandb/debug-internal.log b/QuantumControl/wandb/debug-internal.log
+index f3948df..210c6fd 120000
+--- a/QuantumControl/wandb/debug-internal.log
++++ b/QuantumControl/wandb/debug-internal.log
+@@ -1 +1 @@
+-run-20230426_192704-r1km7iv4/logs/debug-internal.log
+\ No newline at end of file
++run-20230428_023455-zdfslhks/logs/debug-internal.log
+\ No newline at end of file
+diff --git a/QuantumControl/wandb/debug.log b/QuantumControl/wandb/debug.log
+index b01265e..549e05f 120000
+--- a/QuantumControl/wandb/debug.log
++++ b/QuantumControl/wandb/debug.log
+@@ -1 +1 @@
+-run-20230426_192704-r1km7iv4/logs/debug.log
+\ No newline at end of file
++run-20230428_023455-zdfslhks/logs/debug.log
+\ No newline at end of file
+diff --git a/QuantumControl/wandb/latest-run b/QuantumControl/wandb/latest-run
+index 1c97aa7..43cd555 120000
+--- a/QuantumControl/wandb/latest-run
++++ b/QuantumControl/wandb/latest-run
+@@ -1 +1 @@
+-run-20230426_192704-r1km7iv4
+\ No newline at end of file
++run-20230428_023455-zdfslhks
+\ No newline at end of file
