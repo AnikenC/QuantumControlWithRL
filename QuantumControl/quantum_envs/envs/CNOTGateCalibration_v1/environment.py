@@ -20,8 +20,6 @@ class CNOTGateCalibrationEnvironment_V1(gym.Env):
         self.max_reward = 0.
         self.step_for_max_reward = 0
         self.episode_length = 0
-        self.simple_sample = 0
-        self.complete_tomography_state_size = len(self.qenvironment.target.input_states)
         self.process_fidelity = 0.
         self.average_fidelity = 0.
 
@@ -38,7 +36,7 @@ class CNOTGateCalibrationEnvironment_V1(gym.Env):
     
     def _get_info(self):
         info = {
-            "mean reward": np.mean(self.reward),
+            "mean reward": self.reward,
             "episode length": self.episode_length,
             "max reward": self.max_reward,
             "step for max": self.step_for_max_reward,
@@ -59,10 +57,7 @@ class CNOTGateCalibrationEnvironment_V1(gym.Env):
         ### Single Length Episode ###
         self.episode_length += 1
 
-        index = np.random.randint(self.complete_tomography_state_size)
-        if not self.simple_sample == 0:
-            index = np.random.randint(self.simple_sample)
-        self.reward, average_fidelity, process_fidelity = self.qenvironment.perform_action_gate_cal(action, index) # Can support batched actions
+        self.reward, average_fidelity, process_fidelity = self.qenvironment.perform_action_gate_cal(action)
         self.process_fidelity = process_fidelity
         self.average_fidelity = average_fidelity
         if np.max(self.reward) > self.max_reward:
@@ -73,6 +68,4 @@ class CNOTGateCalibrationEnvironment_V1(gym.Env):
 
         if terminated:
             self.episode_length = 0
-        if len(self.reward) == 1:
-            self.reward = self.reward[0]
-        return observation, self.average_fidelity, terminated, False, info
+        return observation, self.reward, terminated, False, info

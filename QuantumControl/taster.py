@@ -8,13 +8,12 @@ import matplotlib.pyplot as plt
 
 ### For Debugging the Environments and Verifying Results ###
 
-env = gym.make("quantum_envs/CNOTGateCalibration-v0")
+env = gym.make("quantum_envs/CNOTGateCalibration-v1")
 obs, info = env.reset()
-action = np.array([ 0.00285997 , 0.34421486, -0.61353683, -0.25360537, -0.26386875,  0.25230902, 0.2414299], dtype=np.float64)
-action = np.array([0])
-simple_action = 2*action
+ideal_action = 2 * np.array([ 0.00285997 , 0.34421486, -0.61353683, -0.25360537, -0.26386875,  0.25230902, 0.2414299], dtype=np.float64)
+random_action = 0.2 * np.ones(7, dtype=np.float64)
 
-sample_size = 1000
+sample_size = 10
 
 reward_arr = np.zeros(sample_size)
 prc_arr = np.zeros(sample_size)
@@ -32,7 +31,7 @@ start_time = time.time()
 
 
 for i in range(sample_size):
-    obs, reward, terminated, truncated, info = env.step(simple_action)
+    obs, reward, terminated, truncated, info = env.step(random_action)
     prc = info["process fidelity"]
     avg = info["average fidelity"]
     reward_arr[i] = reward
@@ -73,12 +72,13 @@ print(f"mean average fidelity: {mean_avg}, standard deviation: {std_avg} max: {m
 
 
 '''
-action, action * 2pi
-ranges from -2pi to 2pi
+When we send an action (gate) into the environment, we want to get a good measure of its fidelity
+To do this we can use Direct Fidelity Estimation along with a Tomographicall Complete Set of 16 States
+Currently, each time we send an action to the environment, we get an output that the one action 
+would have done for one of the 16 states. But we need to average over 100 pauli shots, and all states
 
-simple_action, simple_action * pi
-ranges from -pi to pi
-
-2*simple_action * pi = action*2pi
+Solution:
+Make the environment itself average over 300 repeats, then variance should majorly decrease
+and the learning should become stable, we finally get an accurate fidelity estimate!!!!
 
 '''

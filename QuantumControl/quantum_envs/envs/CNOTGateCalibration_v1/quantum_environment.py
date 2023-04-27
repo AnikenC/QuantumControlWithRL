@@ -146,87 +146,98 @@ class QuantumEnvironment:
         # but im is 0 systematically as dm is hermitian and Pauli is traceless
         return target_state
 
-    def perform_action_gate_cal(self, actions, index):
+    def perform_action_gate_cal(self, actions):
         """
         Execute quantum circuit with parametrized amplitude, retrieve measurement result and assign rewards accordingly
         :param actions: action vector to execute on quantum system
         :return: Reward table (reward for each run in the batch), observations (measurement outcomes),
         obtained density matrix
         """ 
+
+        repeat_size = 300
+
         if actions.ndim == 1:
             actions = np.expand_dims(actions, 0)
         angles, batch_size = np.array(actions), len(np.array(actions))
 
         assert self.target_type == "gate", "Environment only supports Gate Target Type"
 
-        input_state = self.target.input_states[index]
-        # Deduce target state to aim for by applying target operation on it
-        target_state = {"target_type": "state"}
-        if hasattr(input_state, "dm"):
-            target_state["dm"] = Operator(self.target.gate) @ input_state.dm
-        elif hasattr(input_state, "circuit"):
-            target_state_fn = (
-                Operator(self.target.gate)
-                @ input_state.circuit
-                @ (Zero ^ self.n_qubits)
-            )
-            target_state["dm"] = DensityMatrix(target_state_fn)
-        target_state = self.calculate_chi_target_state(target_state)
-
-        # Direct fidelity estimation protocol  (https://doi.org/10.1103/PhysRevLett.106.230501)
-        arr = target_state["Chi"]
-        distribution = torch.distributions.Categorical(probs=torch.tensor(arr ** 2))
-        k_samples = distribution.sample((self.sampling_pauli_space,))
-        pauli_index = torch.unique(k_samples).numpy()
-
-        reward_factor = np.round(
-            [
-                self.c_factor * target_state["Chi"][p] / (self.d * torch.exp(distribution.log_prob(torch.tensor(p))).numpy())
-                for p in pauli_index
-            ],
-            5,
-        )
-
-        # Figure out which observables to sample
-        # observables = [SparsePauliOp(self.Pauli_ops[p]["name"]) for p in pauli_index]
-        observables = SparsePauliOp.from_list(
-            [
-                (self.Pauli_ops[p]["name"], reward_factor[i])
-                for i, p in enumerate(pauli_index)
-            ]
-        )
-
-        # Prepare input state
-        self.qc.append(input_state.circuit.to_instruction(), input_state.register)
-
-        # Apply parametrized quantum circuit (action)
-        parametrized_circ = QuantumCircuit(self.n_qubits)
-        self.parametrized_circuit_func(parametrized_circ)
-
-        # Keep track of process for benchmarking purposes only
+        return_reward = 0.
         prc_fidelity = 0.0
         avg_fidelity = 0.0
-        for angle_set in angles:
-            qc_2 = parametrized_circ.bind_parameters(angle_set)
-            q_process = Operator(qc_2)
-            prc_fidelity += process_fidelity(q_process, Operator(self.target.gate))
-            avg_fidelity += average_gate_fidelity(q_process, Operator(self.target.gate))
-        proc_fidelity = prc_fidelity / batch_size
-        aver_fidelity = avg_fidelity / batch_size
 
-        # Build full quantum circuit: concatenate input state prep and parametrized unitary
-        self.qc.append(parametrized_circ.to_instruction(), input_state.register)
-        # total_shots = self.n_shots * pauli_shots
+        for i in range(repeat_size):
+            index = np.random.randint(len(self.target.input_states))
+            input_state = self.target.input_states[index]
+            # Deduce target state to aim for by applying target operation on it
+            target_state = {"target_type": "state"}
+            if hasattr(input_state, "dm"):
+                target_state["dm"] = Operator(self.target.gate) @ input_state.dm
+            elif hasattr(input_state, "circuit"):
+                target_state_fn = (
+                    Operator(self.target.gate)
+                    @ input_state.circuit
+                    @ (Zero ^ self.n_qubits)
+                )
+                target_state["dm"] = DensityMatrix(target_state_fn)
+            target_state = self.calculate_chi_target_state(target_state)
 
-        estimator = Estimator(options=self.options)
-        job = estimator.run(
-            circuits=[self.qc] * batch_size,
-            observables=[observables] * batch_size,
-            parameter_values=angles,
-            shots=self.sampling_pauli_space,
-        )
+            # Direct fidelity estimation protocol  (https://doi.org/10.1103/PhysRevLett.106.230501)
+            arr = target_state["Chi"]
+            distribution = torch.distributions.Categorical(probs=torch.tensor(arr ** 2))
+            k_samples = distribution.sample((self.sampling_pauli_space,))
+            pauli_index = torch.unique(k_samples).numpy()
 
-        self.qc.clear()  # Reset the QuantumCircuit instance for next iteration
+            reward_factor = np.round(
+                [
+                    self.c_factor * target_state["Chi"][p] / (self.d * torch.exp(distribution.log_prob(torch.tensor(p))).numpy())
+                    for p in pauli_index
+                ],
+                5,
+            )
 
-        reward_table = job.result().values
-        return reward_table, aver_fidelity, proc_fidelity
+            # Figure out which observables to sample
+            # observables = [SparsePauliOp(self.Pauli_ops[p]["name"]) for p in pauli_index]
+            observables = SparsePauliOp.from_list(
+                [
+                    (self.Pauli_ops[p]["name"], reward_factor[i])
+                    for i, p in enumerate(pauli_index)
+                ]
+            )
+
+            # Prepare input state
+            self.qc.append(input_state.circuit.to_instruction(), input_state.register)
+
+            # Apply parametrized quantum circuit (action)
+            parametrized_circ = QuantumCircuit(self.n_qubits)
+            self.parametrized_circuit_func(parametrized_circ)
+
+            # Keep track of process for benchmarking purposes only
+            if i == 0:
+                for angle_set in angles:
+                    qc_2 = parametrized_circ.bind_parameters(angle_set)
+                    q_process = Operator(qc_2)
+                    prc_fidelity += process_fidelity(q_process, Operator(self.target.gate))
+                    avg_fidelity += average_gate_fidelity(q_process, Operator(self.target.gate))
+                proc_fidelity = prc_fidelity / batch_size
+                aver_fidelity = avg_fidelity / batch_size
+
+            # Build full quantum circuit: concatenate input state prep and parametrized unitary
+            self.qc.append(parametrized_circ.to_instruction(), input_state.register)
+            # total_shots = self.n_shots * pauli_shots
+
+            estimator = Estimator(options=self.options)
+            job = estimator.run(
+                circuits=[self.qc] * batch_size,
+                observables=[observables] * batch_size,
+                parameter_values=angles,
+                shots=self.sampling_pauli_space,
+            )
+
+            self.qc.clear()  # Reset the QuantumCircuit instance for next iteration
+
+            return_reward += job.result().values[0]
+
+        mean_reward = return_reward / repeat_size
+        
+        return mean_reward, aver_fidelity, proc_fidelity
