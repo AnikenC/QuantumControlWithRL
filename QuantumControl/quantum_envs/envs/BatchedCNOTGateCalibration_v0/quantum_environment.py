@@ -51,7 +51,7 @@ class QuantumEnvironment:
 
         self.n_qubits = 2
         self.n_shots = 1
-        self.sampling_pauli_space = 100
+        self.sampling_pauli_space = 10
         self.c_factor = 1.
         self.n_actions = 7
 
@@ -173,8 +173,6 @@ class QuantumEnvironment:
         obtained density matrix
         """ 
 
-        repeat_size = 100
-
         if actions.ndim == 1:
             actions = np.expand_dims(actions, 0)
         angles, batch_size = np.array(actions), len(np.array(actions))
@@ -217,14 +215,14 @@ class QuantumEnvironment:
         self.parametrized_circuit_func(parametrized_circ)
 
         # Keep track of process for benchmarking purposes only
-        prc_fidelity = 0.0
+        #prc_fidelity = 0.0
         avg_fidelity = 0.0
         for angle_set in angles:
             qc_2 = parametrized_circ.bind_parameters(angle_set)
             q_process = Operator(qc_2)
-            prc_fidelity += process_fidelity(q_process, Operator(self.target.gate))
+            #prc_fidelity += process_fidelity(q_process, Operator(self.target.gate))
             avg_fidelity += average_gate_fidelity(q_process, Operator(self.target.gate))
-        proc_fidelity = prc_fidelity / batch_size
+        #proc_fidelity = prc_fidelity / batch_size
         aver_fidelity = avg_fidelity / batch_size
 
         # Build full quantum circuit: concatenate input state prep and parametrized unitary
@@ -243,4 +241,4 @@ class QuantumEnvironment:
 
         mean_reward = job.result().values[0]
 
-        return mean_reward, aver_fidelity, proc_fidelity
+        return mean_reward, aver_fidelity#, proc_fidelity

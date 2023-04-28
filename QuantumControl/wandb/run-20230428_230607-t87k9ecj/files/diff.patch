@@ -1,0 +1,107 @@
+diff --git a/QuantumControl/ppo.py b/QuantumControl/ppo.py
+index 9c842a4..8c343cf 100644
+--- a/QuantumControl/ppo.py
++++ b/QuantumControl/ppo.py
+@@ -49,11 +49,11 @@ def parse_args():
+         help="the id of the environment")
+     parser.add_argument("--total-timesteps", type=int, default=10000,
+         help="total timesteps of the experiments")
+-    parser.add_argument("--learning-rate", type=float, default=0.0018,
++    parser.add_argument("--learning-rate", type=float, default=0.0015,
+         help="the learning rate of the optimizer")
+     parser.add_argument("--num-envs", type=int, default=1,
+         help="the number of parallel game environments")
+-    parser.add_argument("--num-steps", type=int, default=300,
++    parser.add_argument("--num-steps", type=int, default=50,
+         help="the number of steps to run in each environment per policy rollout")
+     parser.add_argument("--anneal-lr", type=lambda x: bool(strtobool(x)), default=True, nargs="?", const=True,
+         help="Toggle learning rate annealing for policy and value networks")
+@@ -61,9 +61,9 @@ def parse_args():
+         help="the discount factor gamma")
+     parser.add_argument("--gae-lambda", type=float, default=0.95,
+         help="the lambda for the general advantage estimation")
+-    parser.add_argument("--num-minibatches", type=int, default=10,
++    parser.add_argument("--num-minibatches", type=int, default=2,
+         help="the number of mini-batches")
+-    parser.add_argument("--update-epochs", type=int, default=3,
++    parser.add_argument("--update-epochs", type=int, default=2,
+         help="the K epochs to update the policy")
+     parser.add_argument("--norm-adv", type=lambda x: bool(strtobool(x)), default=True, nargs="?", const=False,
+         help="Toggles advantages normalization")
+diff --git a/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/__pycache__/environment.cpython-39.pyc b/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/__pycache__/environment.cpython-39.pyc
+index c6e90d3..5040e86 100644
+Binary files a/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/__pycache__/environment.cpython-39.pyc and b/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/__pycache__/environment.cpython-39.pyc differ
+diff --git a/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc b/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc
+index 8840c5e..81610dd 100644
+Binary files a/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc and b/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/__pycache__/quantum_environment.cpython-39.pyc differ
+diff --git a/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/environment.py b/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/environment.py
+index 12312b3..a2e6a7b 100644
+--- a/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/environment.py
++++ b/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/environment.py
+@@ -20,7 +20,7 @@ class BatchedCNOTGateCalibrationEnvironment_V0(gym.Env):
+         self.process_fidelity = 0.
+         self.average_fidelity = 0.
+ 
+-        self.batch_size = 300
++        self.batch_size = 50
+         self.global_step = 0
+         self.index = 0
+ 
+@@ -32,7 +32,7 @@ class BatchedCNOTGateCalibrationEnvironment_V0(gym.Env):
+         )
+     
+     def _get_obs(self):
+-        observation = self.index
++        observation = np.array([self.index], dtype=np.float64)
+         return observation
+     
+     def _get_info(self):
+diff --git a/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/quantum_environment.py b/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/quantum_environment.py
+index f9efc22..74bb358 100644
+--- a/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/quantum_environment.py
++++ b/QuantumControl/quantum_envs/envs/BatchedCNOTGateCalibration_v0/quantum_environment.py
+@@ -51,7 +51,7 @@ class QuantumEnvironment:
+ 
+         self.n_qubits = 2
+         self.n_shots = 1
+-        self.sampling_pauli_space = 100
++        self.sampling_pauli_space = 10
+         self.c_factor = 1.
+         self.n_actions = 7
+ 
+@@ -173,8 +173,6 @@ class QuantumEnvironment:
+         obtained density matrix
+         """ 
+ 
+-        repeat_size = 100
+-
+         if actions.ndim == 1:
+             actions = np.expand_dims(actions, 0)
+         angles, batch_size = np.array(actions), len(np.array(actions))
+diff --git a/QuantumControl/wandb/debug-internal.log b/QuantumControl/wandb/debug-internal.log
+index 210c6fd..361f661 120000
+--- a/QuantumControl/wandb/debug-internal.log
++++ b/QuantumControl/wandb/debug-internal.log
+@@ -1 +1 @@
+-run-20230428_023455-zdfslhks/logs/debug-internal.log
+\ No newline at end of file
++run-20230428_230607-t87k9ecj/logs/debug-internal.log
+\ No newline at end of file
+diff --git a/QuantumControl/wandb/debug.log b/QuantumControl/wandb/debug.log
+index 549e05f..1477ed3 120000
+--- a/QuantumControl/wandb/debug.log
++++ b/QuantumControl/wandb/debug.log
+@@ -1 +1 @@
+-run-20230428_023455-zdfslhks/logs/debug.log
+\ No newline at end of file
++run-20230428_230607-t87k9ecj/logs/debug.log
+\ No newline at end of file
+diff --git a/QuantumControl/wandb/latest-run b/QuantumControl/wandb/latest-run
+index 43cd555..f742351 120000
+--- a/QuantumControl/wandb/latest-run
++++ b/QuantumControl/wandb/latest-run
+@@ -1 +1 @@
+-run-20230428_023455-zdfslhks
+\ No newline at end of file
++run-20230428_230607-t87k9ecj
+\ No newline at end of file

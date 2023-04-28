@@ -1,0 +1,85 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.13.11
+    code_path: code/QuantumControl/ppo_jax.py
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.9.11
+    start_time: 1682694367.28103
+    t:
+      1:
+      - 1
+      - 2
+      - 3
+      - 12
+      - 45
+      - 55
+      2:
+      - 1
+      - 2
+      - 3
+      - 12
+      - 45
+      - 55
+      3:
+      - 2
+      - 13
+      - 16
+      - 23
+      - 35
+      4: 3.9.11
+      5: 0.13.11
+      8:
+      - 5
+batch_size:
+  desc: null
+  value: 300
+clip_coef:
+  desc: null
+  value: 0.2
+ent_coef:
+  desc: null
+  value: 0.0
+gae_lambda:
+  desc: null
+  value: 0.95
+gamma:
+  desc: null
+  value: 0.99
+learning_rate:
+  desc: null
+  value: 0.0003
+max_grad_norm:
+  desc: null
+  value: 0.5
+minibatch_size:
+  desc: null
+  value: 100
+num_envs:
+  desc: null
+  value: 1
+num_minibatches:
+  desc: null
+  value: 3
+num_steps:
+  desc: null
+  value: 300
+num_updates:
+  desc: null
+  value: 26666
+seed:
+  desc: null
+  value: 1
+total_timesteps:
+  desc: null
+  value: 8000000
+update_epochs:
+  desc: null
+  value: 3
+vf_coef:
+  desc: null
+  value: 0.5

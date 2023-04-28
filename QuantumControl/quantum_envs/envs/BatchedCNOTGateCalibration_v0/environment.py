@@ -20,7 +20,7 @@ class BatchedCNOTGateCalibrationEnvironment_V0(gym.Env):
         self.process_fidelity = 0.
         self.average_fidelity = 0.
 
-        self.batch_size = 300
+        self.batch_size = 100
         self.global_step = 0
         self.index = 0
 
@@ -32,7 +32,7 @@ class BatchedCNOTGateCalibrationEnvironment_V0(gym.Env):
         )
     
     def _get_obs(self):
-        observation = self.index
+        observation = np.array([self.index], dtype=np.float64)
         return observation
     
     def _get_info(self):
@@ -42,7 +42,7 @@ class BatchedCNOTGateCalibrationEnvironment_V0(gym.Env):
             "max reward": self.max_reward,
             "step for max": self.step_for_max_reward,
             "average fidelity": self.average_fidelity,
-            "process fidelity": self.process_fidelity,
+            #"process fidelity": self.process_fidelity,
         }
         return info
     
@@ -61,8 +61,8 @@ class BatchedCNOTGateCalibrationEnvironment_V0(gym.Env):
         if self.global_step % self.batch_size == 0:
             self.index = np.random.randint(len(self.qenvironment.target.input_states))
 
-        self.reward, average_fidelity, process_fidelity = self.qenvironment.perform_action_gate_cal(action, self.index)
-        self.process_fidelity = process_fidelity
+        self.reward, average_fidelity = self.qenvironment.perform_action_gate_cal(action, self.index)
+        #self.process_fidelity = process_fidelity
         self.average_fidelity = average_fidelity
         if np.max(self.reward) > self.max_reward:
             self.max_reward = np.max(self.reward)

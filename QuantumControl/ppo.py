@@ -49,11 +49,11 @@ def parse_args():
         help="the id of the environment")
     parser.add_argument("--total-timesteps", type=int, default=10000,
         help="total timesteps of the experiments")
-    parser.add_argument("--learning-rate", type=float, default=0.0018,
+    parser.add_argument("--learning-rate", type=float, default=0.0015,
         help="the learning rate of the optimizer")
     parser.add_argument("--num-envs", type=int, default=1,
         help="the number of parallel game environments")
-    parser.add_argument("--num-steps", type=int, default=300,
+    parser.add_argument("--num-steps", type=int, default=50,
         help="the number of steps to run in each environment per policy rollout")
     parser.add_argument("--anneal-lr", type=lambda x: bool(strtobool(x)), default=True, nargs="?", const=True,
         help="Toggle learning rate annealing for policy and value networks")
@@ -61,9 +61,9 @@ def parse_args():
         help="the discount factor gamma")
     parser.add_argument("--gae-lambda", type=float, default=0.95,
         help="the lambda for the general advantage estimation")
-    parser.add_argument("--num-minibatches", type=int, default=10,
+    parser.add_argument("--num-minibatches", type=int, default=2,
         help="the number of mini-batches")
-    parser.add_argument("--update-epochs", type=int, default=3,
+    parser.add_argument("--update-epochs", type=int, default=2,
         help="the K epochs to update the policy")
     parser.add_argument("--norm-adv", type=lambda x: bool(strtobool(x)), default=True, nargs="?", const=False,
         help="Toggles advantages normalization")
