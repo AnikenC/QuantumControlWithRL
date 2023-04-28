@@ -1,0 +1,11 @@
+gymnasium
+torch
+qiskit
+qiskit_ibm_runtime
+wandb
+tensorboard
+numpy
+matplotlib
+jax
+flax
+optuna
