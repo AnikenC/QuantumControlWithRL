@@ -2,14 +2,11 @@ import numpy as np
 import gymnasium as gym
 from gymnasium.spaces import Box
 
-from quantum_envs.envs.CNOTGateCalibration_v1.quantum_environment import QuantumEnvironment
-from quantum_envs.envs.CNOTGateCalibration_v1.target import CNOT
-from quantum_envs.envs.CNOTGateCalibration_v1.static import AbstractionLevel
+from quantum_envs.envs.BatchedCNOTGateCalibration_v0.quantum_environment import QuantumEnvironment
+from quantum_envs.envs.BatchedCNOTGateCalibration_v0.target import CNOT
+from quantum_envs.envs.BatchedCNOTGateCalibration_v0.static import AbstractionLevel
 
-### Version 1 ###
-# Uses Average Fidelity as Reward
-
-class CNOTGateCalibrationEnvironment_V1(gym.Env):
+class BatchedCNOTGateCalibrationEnvironment_V0(gym.Env):
     metadata = {"render_modes": ["human"]}
 
     def __init__(self):
@@ -23,6 +20,10 @@ class CNOTGateCalibrationEnvironment_V1(gym.Env):
         self.process_fidelity = 0.
         self.average_fidelity = 0.
 
+        self.batch_size = 300
+        self.global_step = 0
+        self.index = 0
+
         self.action_space = Box(
             low=-1.0, high=1.0, shape=(self.n_actions,), dtype=np.float64
         )
@@ -31,7 +32,7 @@ class CNOTGateCalibrationEnvironment_V1(gym.Env):
         )
     
     def _get_obs(self):
-        observation = self.init_obs
+        observation = self.index
         return observation
     
     def _get_info(self):
@@ -56,8 +57,11 @@ class CNOTGateCalibrationEnvironment_V1(gym.Env):
     def step(self, action):
         ### Single Length Episode ###
         self.episode_length += 1
+        self.global_step += 1
+        if self.global_step % self.batch_size == 0:
+            self.index = np.random.randint(len(self.qenvironment.target.input_states))
 
-        self.reward, average_fidelity, process_fidelity = self.qenvironment.perform_action_gate_cal(action)
+        self.reward, average_fidelity, process_fidelity = self.qenvironment.perform_action_gate_cal(action, self.index)
         self.process_fidelity = process_fidelity
         self.average_fidelity = average_fidelity
         if np.max(self.reward) > self.max_reward:

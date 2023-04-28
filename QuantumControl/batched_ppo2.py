@@ -12,16 +12,10 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.distributions.normal import Normal
 from torch.utils.tensorboard import SummaryWriter
-from torch.autograd import Variable
-
-from quantum_classes import BatchedSyncVectorEnv
 
 import quantum_envs
 
-# torch.autograd.set_detect_anomaly(True) # For PyTorch-specific Debugging
-
-### Working Properly ###
-### Learning isn't reaching similarly levels as ppo.py, debugging needs to be done ###
+### Working Properly! ###
 
 def parse_args():
     # fmt: off
@@ -40,19 +34,26 @@ def parse_args():
         help="the wandb's project name")
     parser.add_argument("--wandb-entity", type=str, default="quantumcontrolwithrl",
         help="the entity (team) of wandb's project")
+    parser.add_argument("--group-name", type=str, default="complete_tomography_state", nargs="?", const=True,
+        help="the group name of the experiment (what type of sub-environment is being experimented on)")
+    ### Convention for Group Names for Circuit-Level Gate Calibration ###
+    # 1. complete_tomography_state
+    # 2. {n}_input_states , where n is the number of input states you specify in the environment
+    parser.add_argument("--job-type", type=str, default="train", nargs="?", const=True,
+        help="the purpose of the experiment being run")
     parser.add_argument("--capture-video", type=lambda x: bool(strtobool(x)), default=False, nargs="?", const=True,
         help="whether to capture videos of the agent performances (check out `videos` folder)")
 
     # Algorithm specific arguments
-    parser.add_argument("--env-id", type=str, default="quantum_envs/CNOTGateCalibration-v0",
+    parser.add_argument("--env-id", type=str, default="quantum_envs/CNOTGateCalibration-v1",
         help="the id of the environment")
-    parser.add_argument("--total-timesteps", type=int, default=1000000,
+    parser.add_argument("--total-timesteps", type=int, default=10000,
         help="total timesteps of the experiments")
     parser.add_argument("--learning-rate", type=float, default=0.0018,
         help="the learning rate of the optimizer")
     parser.add_argument("--num-envs", type=int, default=1,
         help="the number of parallel game environments")
-    parser.add_argument("--num-steps", type=int, default=300,
+    parser.add_argument("--num-steps", type=int, default=2,
         help="the number of steps to run in each environment per policy rollout")
     parser.add_argument("--anneal-lr", type=lambda x: bool(strtobool(x)), default=True, nargs="?", const=True,
         help="Toggle learning rate annealing for policy and value networks")
@@ -60,7 +61,7 @@ def parse_args():
         help="the discount factor gamma")
     parser.add_argument("--gae-lambda", type=float, default=0.95,
         help="the lambda for the general advantage estimation")
-    parser.add_argument("--num-minibatches", type=int, default=2,
+    parser.add_argument("--num-minibatches", type=int, default=1,
         help="the number of mini-batches")
     parser.add_argument("--update-epochs", type=int, default=3,
         help="the K epochs to update the policy")
@@ -70,7 +71,7 @@ def parse_args():
         help="the surrogate clipping coefficient")
     parser.add_argument("--clip-vloss", type=lambda x: bool(strtobool(x)), default=True, nargs="?", const=True,
         help="Toggles whether or not to use a clipped loss for the value function, as per the paper.")
-    parser.add_argument("--ent-coef", type=float, default=0.0,
+    parser.add_argument("--ent-coef", type=float, default=0.001,
         help="coefficient of the entropy")
     parser.add_argument("--vf-coef", type=float, default=0.5,
         help="coefficient of the value function")
@@ -88,14 +89,18 @@ def parse_args():
 def make_env(env_id, idx, capture_video, run_name, gamma):
     def thunk():
         env = gym.make(env_id)
-        #env = gym.wrappers.FlattenObservation(env)  # deal with dm_control's Dict observation space
-        #env = gym.wrappers.RecordEpisodeStatistics(env) # Not using this wrapper due to batched reward
-        #env = gym.wrappers.ClipAction(env)
+        env = gym.wrappers.FlattenObservation(env)  # deal with dm_control's Dict observation space
+        env = gym.wrappers.RecordEpisodeStatistics(env)
+        if capture_video:
+            if idx == 0:
+                env = gym.wrappers.RecordVideo(env, f"videos/{run_name}")
+        env = gym.wrappers.ClipAction(env)
         env = gym.wrappers.NormalizeObservation(env)
-        env = gym.wrappers.TransformObservation(env, lambda obs: np.clip(obs, -1, 1))
+        env = gym.wrappers.TransformObservation(env, lambda obs: np.clip(obs, 0, 16))
         #env = gym.wrappers.NormalizeReward(env, gamma=gamma)
         #env = gym.wrappers.TransformReward(env, lambda reward: np.clip(reward, -5, 5))
         return env
+
     return thunk
 
 
@@ -149,8 +154,8 @@ if __name__ == "__main__":
             sync_tensorboard=True,
             config=vars(args),
             name=run_name,
-            # monitor_gym=True, no longer works for gymnasium
             save_code=True,
+            group=args.group_name,
         )
     writer = SummaryWriter(f"runs/{run_name}")
     writer.add_text(
@@ -167,9 +172,8 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
 
     # env setup
-    envs = BatchedSyncVectorEnv(
-        [make_env(args.env_id, i, args.capture_video, run_name, args.gamma) for i in range(args.num_envs)],
-        num_steps = args.num_steps
+    envs = gym.vector.SyncVectorEnv(
+        [make_env(args.env_id, i, args.capture_video, run_name, args.gamma) for i in range(args.num_envs)]
     )
     assert isinstance(envs.single_action_space, gym.spaces.Box), "only continuous action space is supported"
 
@@ -199,44 +203,43 @@ if __name__ == "__main__":
             frac = 1.0 - (update - 1.0) / num_updates
             lrnow = frac * args.learning_rate
             optimizer.param_groups[0]["lr"] = lrnow
-        
-        ### We will do batching within the environment, so global step sizes are reduced ###
-        global_step += 1 * args.num_envs * args.num_steps
-        dones[:] = torch.ones(args.num_envs).to(device) # Because all episodes are of 1 step only
-        obs[:] = next_obs # Because its fixed, we just leave it like this for now
 
-        action, logprob, _, value = agent.get_action_and_value(next_obs)
-        print(action)
+        for step in range(0, args.num_steps):
+            global_step += 1 * args.num_envs
+            obs[step] = next_obs
+            dones[step] = next_done
 
-        action, logprob, _, value = agent.get_action_and_value(next_obs)
-        print(action)
+            # ALGO LOGIC: action logic
+            with torch.no_grad():
+                action, logprob, _, value = agent.get_action_and_value(next_obs)
+                values[step] = value.flatten()
+            actions[step] = action
+            logprobs[step] = logprob
 
-        action, logprob, _, value = agent.get_action_and_value(next_obs)
-        print(action)
+            # TRY NOT TO MODIFY: execute the game and log data.
+            next_obs, reward, terminated, truncated, infos = envs.step(action.cpu().numpy())
+            done = np.logical_or(terminated, truncated)
+            rewards[step] = torch.tensor(reward).to(device).view(-1)
+            next_obs, next_done = torch.Tensor(next_obs).to(device), torch.Tensor(done).to(device)
 
-        action, logprob, _, value = agent.get_action_and_value(next_obs)
-        logprob = logprob.detach()
-        value = value.detach()
-        actions[:] = action
-        logprobs[:] = logprob
-        values[:] = value
+            # Only print when at least 1 env is done
+            if "final_info" not in infos:
+                continue
 
-        ### Remember to specify the number of actions for the third dimension, in this case 7
-        reshaped_action = actions.cpu().numpy().reshape((args.num_envs, args.num_steps, 7))
-        new_obs, reward, terminated, truncated, infos = envs.step(reshaped_action)
-        rewards = torch.tensor(np.transpose(reward)).to(device) # Because we did some reshaping
-
-        for info in infos["final_info"]:
-            temp_return = info["mean reward"]
-            max_reward_at_step = info["step for max"]
-            max_reward = info["max reward"]
-            #print(f"global_step={global_step}, episodic_return={temp_return}, delta={delta}")
-            #print(f"max reward of {max_reward} at step {max_reward_at_step}")
-            writer.add_scalar("charts/episodic_return", temp_return, global_step)
-            writer.add_scalar("charts/average_fidelity", info["average fidelity"], global_step)
-            writer.add_scalar("charts/process_fidelity", info["process fidelity"], global_step)
-            writer.add_scalar("charts/normalized_episodic_return", np.mean(reward), global_step)
-            writer.add_scalar("charts/episodic_length", info["episode length"], global_step)
+            for info in infos["final_info"]:
+                # Skip the envs that are not done
+                if info is None:
+                    continue
+                temp_return = info["mean reward"]
+                max_reward_at_step = info["step for max"]
+                max_reward = info["max reward"]
+                #print(f"global_step={global_step}, episodic_return={temp_return}, delta={delta}")
+                #print(f"max reward of {max_reward} at step {max_reward_at_step}")
+                writer.add_scalar("charts/episodic_return", temp_return, global_step)
+                writer.add_scalar("charts/average_fidelity", info["average fidelity"], global_step)
+                writer.add_scalar("charts/process_fidelity", info["process fidelity"], global_step)
+                writer.add_scalar("charts/normalized_episodic_return", np.mean(reward), global_step)
+                writer.add_scalar("charts/episodic_length", info["episode length"], global_step)
 
         # bootstrap value if not done
         with torch.no_grad():

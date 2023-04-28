@@ -8,12 +8,12 @@ import matplotlib.pyplot as plt
 
 ### For Debugging the Environments and Verifying Results ###
 
-env = gym.make("quantum_envs/CNOTGateCalibration-v1")
+env = gym.make("quantum_envs/BatchedCNOTGateCalibration-v0")
 obs, info = env.reset()
 ideal_action = 2 * np.array([ 0.00285997 , 0.34421486, -0.61353683, -0.25360537, -0.26386875,  0.25230902, 0.2414299], dtype=np.float64)
 random_action = 0.2 * np.ones(7, dtype=np.float64)
 
-sample_size = 10
+sample_size = 1000
 
 reward_arr = np.zeros(sample_size)
 prc_arr = np.zeros(sample_size)
@@ -49,10 +49,11 @@ for i in range(sample_size):
         max_reward = reward
     elif reward < min_reward:
         min_reward = reward
-    #print(f"Run {i}")
-    #print(f"reward: {reward}")
-    #print(f"process fidelity: {prc}")
-    #print(f"average fidelity: {avg}")
+    print(f"Run {i}")
+    print(f"reward: {reward}")
+    print(f"process fidelity: {prc}")
+    print(f"average fidelity: {avg}")
+    print(f"observation index: {obs}")
 
 end_time = time.time()
 print(f"time taken: {end_time - start_time}, time taken per evaluation: {(end_time - start_time)/sample_size}")

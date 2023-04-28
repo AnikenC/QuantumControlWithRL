@@ -45,7 +45,7 @@ def parse_args():
         help="whether to capture videos of the agent performances (check out `videos` folder)")
 
     # Algorithm specific arguments
-    parser.add_argument("--env-id", type=str, default="quantum_envs/CNOTGateCalibration-v1",
+    parser.add_argument("--env-id", type=str, default="quantum_envs/BatchedCNOTGateCalibration-v0",
         help="the id of the environment")
     parser.add_argument("--total-timesteps", type=int, default=10000,
         help="total timesteps of the experiments")
@@ -53,7 +53,7 @@ def parse_args():
         help="the learning rate of the optimizer")
     parser.add_argument("--num-envs", type=int, default=1,
         help="the number of parallel game environments")
-    parser.add_argument("--num-steps", type=int, default=2,
+    parser.add_argument("--num-steps", type=int, default=300,
         help="the number of steps to run in each environment per policy rollout")
     parser.add_argument("--anneal-lr", type=lambda x: bool(strtobool(x)), default=True, nargs="?", const=True,
         help="Toggle learning rate annealing for policy and value networks")
@@ -61,7 +61,7 @@ def parse_args():
         help="the discount factor gamma")
     parser.add_argument("--gae-lambda", type=float, default=0.95,
         help="the lambda for the general advantage estimation")
-    parser.add_argument("--num-minibatches", type=int, default=1,
+    parser.add_argument("--num-minibatches", type=int, default=10,
         help="the number of mini-batches")
     parser.add_argument("--update-epochs", type=int, default=3,
         help="the K epochs to update the policy")
@@ -96,7 +96,7 @@ def make_env(env_id, idx, capture_video, run_name, gamma):
                 env = gym.wrappers.RecordVideo(env, f"videos/{run_name}")
         env = gym.wrappers.ClipAction(env)
         env = gym.wrappers.NormalizeObservation(env)
-        env = gym.wrappers.TransformObservation(env, lambda obs: np.clip(obs, -1, 1))
+        env = gym.wrappers.TransformObservation(env, lambda obs: np.clip(obs, 0, 16))
         #env = gym.wrappers.NormalizeReward(env, gamma=gamma)
         #env = gym.wrappers.TransformReward(env, lambda reward: np.clip(reward, -5, 5))
         return env

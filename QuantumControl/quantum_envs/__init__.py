@@ -11,3 +11,9 @@ register(
     entry_point="quantum_envs.envs:CNOTGateCalibrationEnvironment_V1",
     max_episode_steps=10000000,
 )
+
+register(
+    id="quantum_envs/BatchedCNOTGateCalibration-v0",
+    entry_point="quantum_envs.envs:BatchedCNOTGateCalibrationEnvironment_V0",
+    max_episode_steps=10000000,
+)

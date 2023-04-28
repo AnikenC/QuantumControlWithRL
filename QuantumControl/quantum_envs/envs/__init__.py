@@ -1,2 +1,3 @@
 from quantum_envs.envs.CNOTGateCalibration_v0.environment import CNOTGateCalibrationEnvironment_V0
 from quantum_envs.envs.CNOTGateCalibration_v1.environment import CNOTGateCalibrationEnvironment_V1
+from quantum_envs.envs.BatchedCNOTGateCalibration_v0.environment import BatchedCNOTGateCalibrationEnvironment_V0
