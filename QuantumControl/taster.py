@@ -31,7 +31,7 @@ start_time = time.time()
 
 
 for i in range(sample_size):
-    obs, reward, terminated, truncated, info = env.step(random_action)
+    obs, reward, terminated, truncated, info = env.step(ideal_action)
     prc = info["process fidelity"]
     avg = info["average fidelity"]
     reward_arr[i] = reward
@@ -73,7 +73,7 @@ print(f"mean average fidelity: {mean_avg}, standard deviation: {std_avg} max: {m
 
 '''
 When we send an action (gate) into the environment, we want to get a good measure of its fidelity
-To do this we can use Direct Fidelity Estimation along with a Tomographicall Complete Set of 16 States
+To do this we can use Direct Fidelity Estimation along with a Tomographically Complete Set of 16 States
 Currently, each time we send an action to the environment, we get an output that the one action 
 would have done for one of the 16 states. But we need to average over 100 pauli shots, and all states
 

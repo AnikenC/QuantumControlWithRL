@@ -97,8 +97,8 @@ def make_env(env_id, idx, capture_video, run_name, gamma):
         env = gym.wrappers.ClipAction(env)
         env = gym.wrappers.NormalizeObservation(env)
         env = gym.wrappers.TransformObservation(env, lambda obs: np.clip(obs, -1, 1))
-        env = gym.wrappers.NormalizeReward(env, gamma=gamma)
-        env = gym.wrappers.TransformReward(env, lambda reward: np.clip(reward, -5, 5))
+        #env = gym.wrappers.NormalizeReward(env, gamma=gamma)
+        #env = gym.wrappers.TransformReward(env, lambda reward: np.clip(reward, -5, 5))
         return env
 
     return thunk

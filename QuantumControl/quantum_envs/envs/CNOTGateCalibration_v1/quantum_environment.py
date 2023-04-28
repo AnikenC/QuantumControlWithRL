@@ -122,6 +122,25 @@ class QuantumEnvironment:
             self.target_type = "gate"
         else:
             raise KeyError("target type not identified, must be either gate or state")
+        
+        ### Calculating All Target States Initially for Faster Steps ###
+        index_arr = np.arange(len(self.target.input_states))
+        self.precalc_target_states = [dict() for x in range(len(self.target.input_states))]
+        for index in index_arr:
+            target_state = {"target_type": "state"}
+            input_state = self.target.input_states[index]
+            if hasattr(input_state, "dm"):
+                target_state["dm"] = Operator(self.target.gate) @ input_state.dm
+            elif hasattr(input_state, "circuit"):
+                target_state_fn = (
+                    Operator(self.target.gate)
+                    @ input_state.circuit
+                    @ (Zero ^ self.n_qubits)
+                )
+                target_state["dm"] = DensityMatrix(target_state_fn)
+            target_state = self.calculate_chi_target_state(target_state)
+            self.precalc_target_states[index] = target_state
+
 
     def calculate_chi_target_state(self, target_state: Dict):
         """
@@ -169,18 +188,8 @@ class QuantumEnvironment:
         for i in range(repeat_size):
             index = np.random.randint(len(self.target.input_states))
             input_state = self.target.input_states[index]
-            # Deduce target state to aim for by applying target operation on it
-            target_state = {"target_type": "state"}
-            if hasattr(input_state, "dm"):
-                target_state["dm"] = Operator(self.target.gate) @ input_state.dm
-            elif hasattr(input_state, "circuit"):
-                target_state_fn = (
-                    Operator(self.target.gate)
-                    @ input_state.circuit
-                    @ (Zero ^ self.n_qubits)
-                )
-                target_state["dm"] = DensityMatrix(target_state_fn)
-            target_state = self.calculate_chi_target_state(target_state)
+
+            target_state = self.precalc_target_states[index]
 
             # Direct fidelity estimation protocol  (https://doi.org/10.1103/PhysRevLett.106.230501)
             arr = target_state["Chi"]
